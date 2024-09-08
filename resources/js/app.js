@@ -7,9 +7,14 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import {
+    faSun,
+    faMoon,
+    faHouse,
+    faIdCard,
+} from "@fortawesome/free-solid-svg-icons";
 
-library.add(faSun, faMoon);
+library.add(faSun, faMoon, faHouse, faIdCard);
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
