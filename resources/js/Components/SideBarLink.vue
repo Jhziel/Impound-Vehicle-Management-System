@@ -1,4 +1,5 @@
 <script setup>
+import { Link } from "@inertiajs/vue3";
 defineProps({
     link: String,
     icon: Array,
@@ -11,11 +12,11 @@ defineProps({
 
 <template>
     <li class="flex justify-between items-center">
-        <a
+        <Link
             :href="link"
             :class="active ? 'bg-gray-700' : 'hover:bg-gray-700'"
             class="text-white px-4 py-2 rounded-sm w-full font-medium block text-xl"
             ><font-awesome-icon :icon="icon" class="mr-3" /><slot
-        /></a>
+        /></Link>
     </li>
 </template>
