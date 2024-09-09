@@ -1,5 +1,6 @@
 <script setup>
 import SideBar from "@/Components/SideBar.vue";
+import Header from "@/Components/Header.vue";
 import { useDark, useToggle } from "@vueuse/core";
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
@@ -9,28 +10,7 @@ const toggleDark = useToggle(isDark);
     <div class="flex h-screen bg-gray-200 dark:bg-slate-900">
         <SideBar />
         <div class="flex-1 flex flex-col overflow-hidden">
-            <header
-                class="flex items-center justify-between px-6 py-4 bg-white border-b-4 border-indigo-600 font-semibold dark:bg-slate-950 dark:text-slate-50"
-            >
-                <div
-                    @click="toggleDark()"
-                    class="relative bg-gray-200 dark:bg-gray-500 w-20 cursor-pointer rounded-2xl h-6"
-                >
-                    <button
-                        :class="
-                            isDark
-                                ? 'translate-x-full bg-gray-400 '
-                                : 'translate-x-0 bg-yellow-300 '
-                        "
-                        class="absolute text-lg transition-all transform top-1/2 -translate-y-1/2 left-0 w-10 h-8 rounded-full"
-                    >
-                        <font-awesome-icon
-                            :icon="['fas', isDark ? 'moon' : 'sun']"
-                            class="text-white"
-                        />
-                    </button>
-                </div>
-            </header>
+            <Header :isDark="isDark" @toggleDark="toggleDark" />
             <main>
                 <div
                     class="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border"
