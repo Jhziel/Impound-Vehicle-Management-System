@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/drivers', function () {
-    return Inertia::render('Admin/Index');
+    return Inertia::render('Staff/Drivers/Index');
 });
 
 require __DIR__ . '/auth.php';

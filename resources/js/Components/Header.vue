@@ -2,13 +2,18 @@
 defineProps({
     isDark: Boolean,
 });
-defineEmits(["toggleDark"]);
+defineEmits(["toggleDark", "toggleSideBar"]);
 </script>
 
 <template>
     <header
         class="flex items-center justify-between px-6 py-4 bg-white border-b-4 border-indigo-600 font-semibold dark:bg-slate-950 dark:text-slate-50"
     >
+        <div class="text-2xl border-[2px] border-gray-500 px-3 lg:hidden">
+            <button @click="$emit('toggleSideBar')">
+                <font-awesome-icon :icon="['fas', 'bars']" />
+            </button>
+        </div>
         <div
             @click="$emit('toggleDark')"
             class="relative bg-gray-200 dark:bg-gray-500 w-20 cursor-pointer rounded-2xl h-6"
