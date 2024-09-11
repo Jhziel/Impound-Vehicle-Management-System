@@ -1,113 +1,149 @@
-<script setup></script>
+<script setup>
+import TableRow from "./TableRow.vue";
+
+const drivers = false;
+</script>
 
 <template>
-    <div
-        class="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border"
-    >
-        <div class="p-6 pb-0 mb-0 bg-white rounded-t-2xl">
-            <h6>Authors table</h6>
-        </div>
-        <div class="flex-auto px-0 pt-0 pb-2">
-            <div class="p-0 overflow-x-auto">
-                <table
-                    class="items-center w-full mb-0 align-top border-gray-200 text-slate-500"
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
+        <div
+            class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-slate-800"
+        >
+            <div>
+                <button
+                    id="dropdownActionButton"
+                    data-dropdown-toggle="dropdownAction"
+                    class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                    type="button"
                 >
-                    <thead class="align-bottom">
-                        <tr>
-                            <th
-                                class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                    <span class="sr-only">Action button</span>
+                    Action
+                    <svg
+                        class="w-2.5 h-2.5 ms-2.5"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 10 6"
+                    >
+                        <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="m1 1 4 4 4-4"
+                        />
+                    </svg>
+                </button>
+                <!-- Dropdown menu -->
+                <div
+                    id="dropdownAction"
+                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+                >
+                    <ul
+                        class="py-1 text-sm text-slate-700 dark:text-gray-200"
+                        aria-labelledby="dropdownActionButton"
+                    >
+                        <li>
+                            <a
+                                href="#"
+                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                >Reward</a
                             >
-                                Author
-                            </th>
-                            <th
-                                class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                >Promote</a
                             >
-                                Function
-                            </th>
-                            <th
-                                class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                >Activate account</a
                             >
-                                Status
-                            </th>
-                            <th
-                                class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
-                            >
-                                Employed
-                            </th>
-                            <th
-                                class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-slate-400 opacity-70"
-                            ></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent"
-                            >
-                                <div class="flex px-2 py-1">
-                                    <div>
-                                        <img
-                                            src=""
-                                            class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
-                                            alt="user6"
-                                        />
-                                    </div>
-                                    <div class="flex flex-col justify-center">
-                                        <h6 class="mb-0 leading-normal text-sm">
-                                            Miriam Eric
-                                        </h6>
-                                        <p
-                                            class="mb-0 leading-tight text-xs text-slate-400"
-                                        >
-                                            miriam@creative-tim.com
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent"
-                            >
-                                <p
-                                    class="mb-0 font-semibold leading-tight text-xs"
-                                >
-                                    Programtor
-                                </p>
-                                <p
-                                    class="mb-0 leading-tight text-xs text-slate-400"
-                                >
-                                    Developer
-                                </p>
-                            </td>
-                            <td
-                                class="p-2 leading-normal text-center align-middle bg-transparent border-b-0 text-sm whitespace-nowrap shadow-transparent"
-                            >
-                                <span
-                                    class="bg-gradient-to-tl from-green-600 to-lime-400 px-3.6 text-xs rounded-1.8 py-2.2 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"
-                                    >Online</span
-                                >
-                            </td>
-                            <td
-                                class="p-2 text-center align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent"
-                            >
-                                <span
-                                    class="font-semibold leading-tight text-xs text-slate-400"
-                                    >14/09/20</span
-                                >
-                            </td>
-                            <td
-                                class="p-2 align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent"
-                            >
-                                <a
-                                    href="javascript:;"
-                                    class="font-semibold leading-tight text-xs text-slate-400"
-                                >
-                                    Edit
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </li>
+                    </ul>
+                    <div class="py-1">
+                        <a
+                            href="#"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                            >Delete User</a
+                        >
+                    </div>
+                </div>
+            </div>
+            <label for="table-search" class="sr-only">Search</label>
+            <div class="relative">
+                <div
+                    class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none"
+                >
+                    <svg
+                        class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                    >
+                        <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                        />
+                    </svg>
+                </div>
+                <input
+                    type="text"
+                    id="table-search-users"
+                    class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search for users"
+                />
             </div>
         </div>
+        <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+        >
+            <thead
+                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+                <tr>
+                    <th scope="col" class="p-4">
+                        <div class="flex items-center">
+                            <input
+                                id="checkbox-all-search"
+                                type="checkbox"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            />
+                            <label for="checkbox-all-search" class="sr-only"
+                                >checkbox</label
+                            >
+                        </div>
+                    </th>
+                    <th scope="col" class="px-6 py-3">Name</th>
+                    <th scope="col" class="px-6 py-3">Position</th>
+                    <th scope="col" class="px-6 py-3">Status</th>
+                    <th scope="col" class="px-6 py-3">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-if="!drivers">
+                    <td
+                        class="text-2xl dark:text-white text-center py-10 font-semibold"
+                        colspan="5"
+                    >
+                        No Drivers Data
+                    </td>
+                </tr>
+
+                <template v-else>
+                    <TableRow />
+                    <TableRow />
+                </template>
+            </tbody>
+        </table>
+        <div class="bg-white dark:bg-slate-800 text-white">hello</div>
     </div>
 </template>
