@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,5 +29,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/drivers', function () {
     return Inertia::render('Staff/Drivers/Index');
 });
+
+Route::resource('/permissions', PermissionController::class);
+Route::resource('/roles', RoleController::class);
 
 require __DIR__ . '/auth.php';
