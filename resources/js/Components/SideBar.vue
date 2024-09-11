@@ -57,6 +57,22 @@ defineEmits(["hideSidebar"]);
                     :active="$page.url.startsWith('/impound_area')"
                     >Reports</SideBarLink
                 >
+
+                <!-- Permissions -->
+                <SideBarLink
+                    link="/permissions"
+                    :icon="['fas', 'user-lock']"
+                    :active="$page.url.startsWith('/permissions')"
+                    >Permissions</SideBarLink
+                >
+
+                <!-- Roles -->
+                <SideBarLink
+                    link="/roles"
+                    :icon="['fas', 'user-gear']"
+                    :active="$page.url.startsWith('/roles')"
+                    >Roles</SideBarLink
+                >
             </ul>
         </aside>
     </div>
