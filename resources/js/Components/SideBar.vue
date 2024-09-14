@@ -73,6 +73,14 @@ defineEmits(["hideSidebar"]);
                     :active="$page.url.startsWith('/roles')"
                     >Roles</SideBarLink
                 >
+
+                <!-- Users -->
+                <SideBarLink
+                    link="/users"
+                    :icon="['fas', 'users']"
+                    :active="$page.url.startsWith('/userss')"
+                    >Users</SideBarLink
+                >
             </ul>
         </aside>
     </div>

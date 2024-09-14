@@ -5,7 +5,7 @@ import Table from "@/Components/Table.vue";
 import TableRowPermissionRole from "@/Components/TableRowPermissionRole.vue";
 defineOptions({ layout: BaseLayout });
 defineProps({
-    permissions: Object,
+    roles: Object,
 });
 
 const destroy = (id) => {
@@ -17,7 +17,18 @@ const destroy = (id) => {
     <Head>
         <title>Permissions</title>
     </Head>
-    <Table :heads="['name', 'action']">
-        <TableRowPermissionRole />
+    <Table
+        :heads="['name', 'action']"
+        linkName="New Role"
+        linkAdd="/roles/create/"
+        pageTitle="Roles List"
+    >
+        <TableRowPermissionRole
+            v-for="role in roles"
+            :key="index"
+            :data="role"
+            link="roles"
+            @delete-permission="destroy"
+        />
     </Table>
 </template>

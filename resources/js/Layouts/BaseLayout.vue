@@ -22,7 +22,7 @@ const toggleSideBar = () => {
                 @toggleDark="toggleDark"
                 @toggleSideBar="toggleSideBar"
             />
-            <main class="px-10 overflow-y-auto">
+            <main class="px-8 overflow-y-auto">
                 <slot />
             </main>
         </div>

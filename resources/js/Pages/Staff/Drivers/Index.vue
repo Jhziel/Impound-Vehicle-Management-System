@@ -10,7 +10,15 @@ defineOptions({ layout: BaseLayout });
     <Head>
         <title>Drivers</title>
     </Head>
-    <Table :heads="['name', 'position', 'status', 'action']">
+    <Table
+        :heads="['name', 'position', 'status', 'action']"
+        linkName="New Driver"
+        linkAdd="asdadssad"
+        pageTitle="Users List"
+    >
+        <TableRow />
+        <TableRow />
+        <TableRow />
         <TableRow />
     </Table>
 </template>
