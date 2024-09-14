@@ -17,11 +17,18 @@ const destroy = (id) => {
     <Head>
         <title>Permissions</title>
     </Head>
-    <Table :heads="['name', 'action']" linkAdd="Permission">
+    <Table
+        :heads="['name', 'action']"
+        linkName="New Permission"
+        linkAdd="/permissions/create"
+        pageTitle="Permissions List"
+    >
         <TableRowPermissionRole
             v-for="permission in permissions"
             :key="permission.id"
-            :permission="permission"
+            :data="permission"
+            link="permissions"
+            @delete-permission="destroy"
         />
     </Table>
 </template>
