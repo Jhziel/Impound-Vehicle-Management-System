@@ -1,7 +1,12 @@
 <script setup>
 import Table from "@/Components/Table.vue";
 import BaseLayout from "@/Layouts/BaseLayout.vue";
+import TableRow from "@/Components/TableRow.vue";
 defineOptions({ layout: BaseLayout });
+
+defineProps({
+    users: Array,
+});
 </script>
 
 <template>
@@ -11,5 +16,7 @@ defineOptions({ layout: BaseLayout });
         linkName="New User"
         linkAdd="/users/create"
         pageTitle="Users List"
-    ></Table>
+    >
+        <TableRow v-for="user in users" :key="index" :data="user" />
+    </Table>
 </template>

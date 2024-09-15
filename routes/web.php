@@ -25,13 +25,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('/permissions', PermissionController::class)->middleware('permission:Manage Permissions');
+    Route::resource('/roles', RoleController::class)->middleware('permission:Manage Roles');
+    Route::resource('/users', UserController::class)->middleware('permission:Manage Users');
 });
 
 Route::get('/drivers', function () {
-    return Inertia::render('Staff/Drivers/Index');
+    return Inertia::render('Drivers/Index');
 });
 
-Route::resource('/permissions', PermissionController::class);
-Route::resource('/roles', RoleController::class);
-Route::resource('/users', UserController::class);
 require __DIR__ . '/auth.php';

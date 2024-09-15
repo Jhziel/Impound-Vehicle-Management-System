@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+defineProps({
+    data: Array,
+});
+</script>
 
 <template>
     <tr
@@ -14,11 +18,10 @@
                 alt="Jese image"
             />
             <div class="ps-3">
-                <div class="text-base font-semibold">Leslie Livingston</div>
-                <div class="font-normal text-gray-500">leslie@flowbite.com</div>
+                <div class="text-base font-semibold">{{ data.name }}</div>
             </div>
         </th>
-        <td class="px-6 py-4">SEO Specialist</td>
+        <td class="px-6 py-4"></td>
         <td class="px-6 py-4">
             <div class="flex items-center">
                 <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>

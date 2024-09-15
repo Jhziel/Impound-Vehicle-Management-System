@@ -14,7 +14,9 @@ defineOptions({
 });
 
 const props = defineProps({
+    permissions: Array,
     role: Object,
+    rolePermissions: Array,
 });
 
 const form = useForm({
@@ -23,14 +25,17 @@ const form = useForm({
 });
 
 const submit = () => {
-    router.post("/roles", form);
+    router.put(`/roles/${props.role.id}`, form);
 };
 
-/* onMounted(() => {
+onMounted(() => {
+    if (props.rolePermissions) {
+        form.permissions = [...props.rolePermissions];
+    }
     if (props.role) {
         form.name = props.role.name;
     }
-}); */
+});
 </script>
 
 <template>
@@ -49,7 +54,6 @@ const submit = () => {
                     v-model="form.name"
                 />
             </div>
-           
 
             <CheckBoxLayout
                 class="items-center grid grid-cols-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
