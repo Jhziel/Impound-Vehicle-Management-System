@@ -22,10 +22,11 @@ const destroy = (id) => {
         linkName="New Role"
         linkAdd="/roles/create/"
         pageTitle="Roles List"
+        :pageData="roles"
     >
         <TableRowPermissionRole
-            v-for="role in roles"
-            :key="index"
+            v-for="role in roles.data"
+            :key="role.id"
             :data="role"
             link="roles"
             @delete-permission="destroy"
