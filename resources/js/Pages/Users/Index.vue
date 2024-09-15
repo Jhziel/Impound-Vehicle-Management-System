@@ -16,7 +16,8 @@ defineProps({
         linkName="New User"
         linkAdd="/users/create"
         pageTitle="Users List"
+        :pageData="users"
     >
-        <TableRow v-for="user in users" :key="index" :data="user" />
+        <TableRow v-for="user in users.data" :key="index" :data="user" />
     </Table>
 </template>

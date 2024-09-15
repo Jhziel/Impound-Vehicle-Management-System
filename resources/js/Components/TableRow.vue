@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-    data: Array,
+    data: Object,
 });
 </script>
 

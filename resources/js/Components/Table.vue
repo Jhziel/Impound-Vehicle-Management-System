@@ -5,6 +5,7 @@ defineProps({
     linkAdd: String,
     linkName: String,
     pageTitle: String,
+    pageData: Object,
 });
 const drivers = true;
 </script>
@@ -44,6 +45,23 @@ const drivers = true;
                 </template>
             </tbody>
         </table>
-        <div class="bg-white dark:bg-slate-800 text-white">hello</div>
+        <div class="bg-white dark:bg-slate-800 text-white px-3 py-2">
+            <div class="flex justify-between">
+                <p> Showing {{ pageData.from }} to {{ pageData.to }} of {{ pageData.total }} entries</p>
+                <div>
+                    <Component v-for="link in pageData.links" :key="link.id">
+                        <Link
+                            v-if="link.url"
+                            :href="link.url"
+                            :class="link.active ? 'bg-blue-500 text-white' : ' bg-slate-100 dark:bg-gray-600'"
+                            class="px-3 py-1 font-md  text-blue-500 dark:text-white "
+                            v-html="link.label"
+                        >
+                           
+                        </Link>
+                    </Component>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
