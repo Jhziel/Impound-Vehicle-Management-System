@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
@@ -14,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Users/Index');
+
+        $users = User::all();
+        return Inertia::render('Users/Index', ['users' => $users]);
     }
 
     /**
@@ -23,10 +26,10 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::with('permissions')->get();
-        
-        return Inertia::render('Admin/Users/Create', [
+
+        return Inertia::render('Users/Create', [
             'roles' => $roles,
-            
+
         ]);
     }
 
@@ -35,7 +38,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'role' => ['required'],
+            'firstName' => ['required'],
+            'lastName' => ['required'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:8', 'confirmed'],
+            'permissions' => ['required']
+
+        ]);
+
+        $user = User::create([
+            'name' => $request->firstName . " " . $request->lastName,
+            'role' => $request->role,
+            'email' => $request->email,
+            'password' => $request->password
+        ]);
+
+        $user->givePermissionTo($request->permissions);
+
+        return redirect('/users');
     }
 
     /**

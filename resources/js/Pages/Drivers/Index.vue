@@ -16,9 +16,7 @@ defineOptions({ layout: BaseLayout });
         linkAdd="asdadssad"
         pageTitle="Users List"
     >
-        <TableRow />
-        <TableRow />
-        <TableRow />
-        <TableRow />
+        <TableRow  />
+        
     </Table>
 </template>

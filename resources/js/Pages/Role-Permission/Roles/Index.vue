@@ -9,7 +9,7 @@ defineProps({
 });
 
 const destroy = (id) => {
-    router.delete(`/permissions/${id}`);
+    router.delete(`/roles/${id}`);
 };
 </script>
 

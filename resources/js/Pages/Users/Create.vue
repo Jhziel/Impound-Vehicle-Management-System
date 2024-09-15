@@ -8,7 +8,7 @@ import FormLabel from "@/Components/FormLabel.vue";
 import FormCheckBox from "@/Components/FormCheckBox.vue";
 import CheckBoxLayout from "@/Components/CheckBoxLayout.vue";
 import { router, useForm } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 defineOptions({
     layout: BaseLayout,
 });
@@ -22,6 +22,7 @@ const form = useForm({
     lastName: "",
     email: "",
     password: "",
+    password_confirmation: "",
     permissions: [],
 });
 
@@ -40,6 +41,12 @@ const filteredPermissions = computed(() => {
 const submit = () => {
     router.post("/users", form);
 };
+
+onMounted(() => {
+    if (props.roles.length > 0) {
+        form.role = props.roles[0].id; // Set the first role's ID as the selected value
+    }
+});
 </script>
 
 <template>
@@ -54,7 +61,6 @@ const submit = () => {
                 class="bg-gray-50 w-full border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block sm:w-[465px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 v-model="form.role"
             >
-                <option disabled selected>Choose Role</option>
                 <option v-for="role in roles" :key="role.id" :value="role.id">
                     {{ role.name }}
                 </option>
@@ -119,14 +125,16 @@ const submit = () => {
 
                 <!-- Confirm Password input field -->
                 <div class="w-full">
-                    <FormLabel labelfor="lastName">Confirm Password:</FormLabel>
+                    <FormLabel labelfor="password_confirmation"
+                        >Confirm Password:</FormLabel
+                    >
                     <FormInput
                         width="full"
-                        type="text"
-                        name="lastName"
-                        id="lastName"
+                        type="password"
+                        name="password_confirmation"
+                        id="password_confirmation"
                         placeholder="Confirm Password"
-                        v-model="form.password"
+                        v-model="form.password_confirmation"
                     />
                 </div>
             </div>

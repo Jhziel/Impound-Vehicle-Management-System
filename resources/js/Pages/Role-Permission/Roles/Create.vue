@@ -42,7 +42,7 @@ const submit = () => {
                     v-model="form.name"
                 />
             </div>
-          
+
             <CheckBoxLayout
                 class="items-center grid grid-cols-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             >
@@ -56,7 +56,7 @@ const submit = () => {
                 />
             </CheckBoxLayout>
 
-            <FormButton> Submit </FormButton>
+            <FormButton :disabled="form.processing"> Submit </FormButton>
         </form>
     </FormLayout>
 </template>
