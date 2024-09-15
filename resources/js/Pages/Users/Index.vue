@@ -4,8 +4,9 @@ import BaseLayout from "@/Layouts/BaseLayout.vue";
 import TableRow from "@/Components/TableRow.vue";
 defineOptions({ layout: BaseLayout });
 
-defineProps({
-    users: Array,
+const props=defineProps({
+    users: Object,
+    filters: Object,
 });
 </script>
 
@@ -17,7 +18,9 @@ defineProps({
         linkAdd="/users/create"
         pageTitle="Users List"
         :pageData="users"
+        search="users"
+        :currentSeach="filters"
     >
-        <TableRow v-for="user in users.data" :key="index" :data="user" />
+        <TableRow v-for="user in users.data" :key="user.id" :data="user" />
     </Table>
 </template>

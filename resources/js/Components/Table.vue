@@ -1,13 +1,34 @@
 <script setup>
 import SearchAndActionButton from "@/Components/SearchAndActionButton.vue";
-defineProps({
+import { router } from "@inertiajs/vue3";
+import { throttle } from "lodash";
+import { ref, watch } from "vue";
+const props = defineProps({
     heads: Array,
     linkAdd: String,
     linkName: String,
     pageTitle: String,
     pageData: Object,
+    search: String,
+    currentSeach: Object,
 });
+
+const search = ref(props.currentSeach.search);
 const drivers = true;
+
+watch(
+    search,
+    throttle(function (value) {
+        router.get(
+            `/${props.search}`,
+            { search: value },
+            {
+                preserveState: true,
+                replace: true,
+            }
+        );
+    }, 500)
+);
 </script>
 
 <template>
@@ -17,7 +38,12 @@ const drivers = true;
         >
             {{ pageTitle }}
         </h1>
-        <SearchAndActionButton :linkAdd="linkAdd" :linkName="linkName" />
+        <SearchAndActionButton
+            :linkAdd="linkAdd"
+            :linkName="linkName"
+            v-model="search"
+        />
+
         <table
             class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
         >
@@ -45,20 +71,28 @@ const drivers = true;
                 </template>
             </tbody>
         </table>
-        <div class="bg-white dark:bg-slate-800 text-white px-3 py-2">
+        <div class="bg-white dark:bg-slate-800 px-3 py-2">
             <div class="flex justify-between">
-                <p> Showing {{ pageData.from }} to {{ pageData.to }} of {{ pageData.total }} entries</p>
+                <p class="text-gray-800 dark:text-slate-50">
+                    Showing {{ pageData.from }} to {{ pageData.to }} of
+                    {{ pageData.total }} entries
+                </p>
                 <div>
-                    <Component v-for="link in pageData.links" :key="link.id">
-                        <Link
-                            v-if="link.url"
-                            :href="link.url"
-                            :class="link.active ? 'bg-blue-500 text-white' : ' bg-slate-100 dark:bg-gray-600'"
-                            class="px-3 py-1 font-md  text-blue-500 dark:text-white "
-                            v-html="link.label"
-                        >
-                           
-                        </Link>
+                    <Component
+                        :is="link.url ? 'Link' : 'span'"
+                        v-for="link in pageData.links"
+                        :key="link.id"
+                        :href="link.url"
+                        :class="
+                            link.active
+                                ? 'bg-blue-500 text-white'
+                                : link.url
+                                ? 'bg-slate-200 dark:bg-gray-600'
+                                : 'bg-gray-300 dark:bg-gray-900 text-gray-500 cursor-not-allowed'
+                        "
+                        class="px-3 py-1 font-md text-blue-500 dark:text-white"
+                        v-html="link.label"
+                    >
                     </Component>
                 </div>
             </div>

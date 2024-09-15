@@ -1,4 +1,5 @@
 <script setup>
+const search = defineModel();
 defineProps({
     linkAdd: String,
     linkName: String,
@@ -36,9 +37,10 @@ defineProps({
                     id="table-search-users"
                     class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search for users"
+                    v-model="search"
                 />
             </div>
-            <div class="text-white ">
+            <div class="text-white">
                 <Link :href="linkAdd" class="bg-indigo-600 py-2 px-4 shadow-md"
                     ><font-awesome-icon
                         :icon="['fas', 'plus']"
