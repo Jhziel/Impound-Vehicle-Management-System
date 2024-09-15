@@ -1,7 +1,7 @@
 <script setup>
 import SideBarLink from "@/Components/SideBarLink.vue";
 
-defineProps({
+const props = defineProps({
     isOpen: {
         type: Boolean,
         default: false,
@@ -31,56 +31,78 @@ defineEmits(["hideSidebar"]);
                     link="/"
                     :icon="['fas', 'house']"
                     :active="$page.url === '/'"
-                    >Dashboard</SideBarLink
                 >
+                    Dashboard
+                </SideBarLink>
 
                 <!-- Drivers Link -->
                 <SideBarLink
                     link="/drivers"
                     :icon="['fas', 'id-card']"
                     :active="$page.url.startsWith('/drivers')"
-                    >Drivers</SideBarLink
                 >
+                    Drivers
+                </SideBarLink>
 
                 <!-- Impounding Area -->
                 <SideBarLink
                     link="/impound_area"
                     :icon="['fas', 'map-location-dot']"
                     :active="$page.url.startsWith('/impound_area')"
-                    >Impound Area</SideBarLink
                 >
+                    Impound Area
+                </SideBarLink>
 
                 <!-- Reports -->
                 <SideBarLink
                     link="/reports"
                     :icon="['fas', 'file']"
                     :active="$page.url.startsWith('/impound_area')"
-                    >Reports</SideBarLink
                 >
+                    Reports
+                </SideBarLink>
 
                 <!-- Permissions -->
                 <SideBarLink
+                    v-if="
+                        $page.props.auth.user_permissions.includes(
+                            'Manage Permissions'
+                        )
+                    "
                     link="/permissions"
                     :icon="['fas', 'user-lock']"
                     :active="$page.url.startsWith('/permissions')"
-                    >Permissions</SideBarLink
                 >
+                    Permissions
+                </SideBarLink>
 
                 <!-- Roles -->
                 <SideBarLink
+                    v-if="
+                        $page.props.auth.user_permissions.includes(
+                            'Manage Roles'
+                        )
+                    "
                     link="/roles"
                     :icon="['fas', 'user-gear']"
                     :active="$page.url.startsWith('/roles')"
-                    >Roles</SideBarLink
                 >
+                    Roles
+                </SideBarLink>
 
                 <!-- Users -->
                 <SideBarLink
+                    v-if="
+                        $page.props.auth.user_permissions.includes(
+                            'Manage Users'
+                        )
+                    "
                     link="/users"
                     :icon="['fas', 'users']"
                     :active="$page.url.startsWith('/users')"
-                    >Users</SideBarLink
                 >
+                    Users
+                </SideBarLink>
             </ul>
         </aside>
     </div>
