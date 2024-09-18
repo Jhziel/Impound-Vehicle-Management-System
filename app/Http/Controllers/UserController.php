@@ -18,8 +18,7 @@ class UserController extends Controller
 
         $users = User::query()->when($request->input('search'), function ($query, $search) {
             $query->where('name', 'like', "%{$search}%");
-        })->paginate(4)
-            ->withQueryString();
+        })->paginate(4)->withQueryString();
         return Inertia::render('Users/Index', [
             'users' => $users,
             'filters' => $request->only('search'),

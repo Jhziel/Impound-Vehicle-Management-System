@@ -9,10 +9,17 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::paginate(4);
-        return Inertia::render('Role-Permission/Roles/Index', ['roles' => $roles]);
+        
+        $roles = Role::query()->when($request->input('search'), function ($query, $search) {
+            $query->where('name', 'like', "%{$search}%");
+        })->paginate(4)
+            ->withQueryString();
+        return Inertia::render('Role-Permission/Roles/Index', [
+            'roles' => $roles,
+            'filters' => $request->only('search'),
+        ]);
     }
 
     /**
@@ -41,7 +48,6 @@ class RoleController extends Controller
         $role->givePermissionTo($request->permissions);
 
         return redirect('/roles');
-        
     }
 
 

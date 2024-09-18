@@ -6,6 +6,8 @@ import { createInertiaApp, Head, Link } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import VSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
     faSun,
@@ -51,6 +53,7 @@ createInertiaApp({
             .component("FontAwesomeIcon", FontAwesomeIcon)
             .component("Head", Head)
             .component("Link", Link)
+            .component("v-select", VSelect)
             .use(plugin)
             .use(ZiggyVue)
             .mount(el);
