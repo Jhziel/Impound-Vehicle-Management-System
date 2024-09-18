@@ -50,6 +50,9 @@ onMounted(() => {
 </script>
 
 <template>
+    <Head>
+        <title>Create-User</title>
+    </Head>
     <FormLayout>
         <PageHeading pageTitle="Create User" link="/users" />
 

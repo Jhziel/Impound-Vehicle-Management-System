@@ -1,22 +1,26 @@
 <script setup>
-import BaseLayout from "@/Layouts/BaseLayout.vue";
 import Table from "@/Components/Table.vue";
+import BaseLayout from "@/Layouts/BaseLayout.vue";
 import TableRow from "@/Components/TableRow.vue";
-
 defineOptions({ layout: BaseLayout });
+
+const props=defineProps({
+    users: Object,
+    filters: Object,
+});
 </script>
 
 <template>
-    <Head>
-        <title>Drivers</title>
-    </Head>
+    <Head> Users </Head>
     <Table
-        :heads="['name', 'position', 'status', 'action']"
-        linkName="New Driver"
-        linkAdd="asdadssad"
+        :heads="['name', 'position', 'permissions', 'action']"
+        linkName="New User"
+        linkAdd="/users/create"
         pageTitle="Users List"
+        :pageData="users"
+        search="users"
+        :currentSeach="filters"
     >
-        <TableRow  />
-        
+        <TableRow v-for="user in users.data" :key="user.id" :data="user" />
     </Table>
 </template>

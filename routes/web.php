@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -28,10 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/permissions', PermissionController::class)->middleware('permission:Manage Permissions');
     Route::resource('/roles', RoleController::class)->middleware('permission:Manage Roles');
     Route::resource('/users', UserController::class)->middleware('permission:Manage Users');
+    Route::resource('/drivers', DriverController::class)/* ->middleware('permission:Manage Drivers') */;
 });
 
-Route::get('/drivers', function () {
-    return Inertia::render('Drivers/Index');
-});
 
 require __DIR__ . '/auth.php';

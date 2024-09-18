@@ -6,6 +6,7 @@ import TableRowPermissionRole from "@/Components/TableRowPermissionRole.vue";
 defineOptions({ layout: BaseLayout });
 defineProps({
     roles: Object,
+    filters: Object,
 });
 
 const destroy = (id) => {
@@ -23,6 +24,8 @@ const destroy = (id) => {
         linkAdd="/roles/create/"
         pageTitle="Roles List"
         :pageData="roles"
+        search="roles"
+        :currentSeach="filters"
     >
         <TableRowPermissionRole
             v-for="role in roles.data"
