@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Arr;
@@ -12,7 +13,13 @@ class DriverController extends Controller
 
     public function index(Request $request)
     {
-        return Inertia::render('Drivers/Index');
+        $users = User::query()->when($request->input('search'), function ($query, $search) {
+            $query->where('name', 'like', "%{$search}%");
+        })->paginate(4)->withQueryString();
+        return Inertia::render('Drivers/Index', [
+            'users' => $users,
+            'filters' => $request->only('search'),
+        ]);
     }
 
     /**
