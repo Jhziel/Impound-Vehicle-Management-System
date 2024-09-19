@@ -4,19 +4,21 @@ import BaseLayout from "@/Layouts/BaseLayout.vue";
 import TableRow from "@/Components/TableRow.vue";
 defineOptions({ layout: BaseLayout });
 
-const props=defineProps({
+const props = defineProps({
     users: Object,
     filters: Object,
 });
 </script>
 
 <template>
-    <Head> Users </Head>
+    <Head>
+        <title>Drivers</title>
+    </Head>
     <Table
-        :heads="['name', 'position', 'permissions', 'action']"
-        linkName="New User"
-        linkAdd="/users/create"
-        pageTitle="Users List"
+        :heads="['name', 'license no', 'license type', 'action']"
+        linkName="New Driver"
+        linkAdd="/drivers/create"
+        pageTitle="Drivers List"
         :pageData="users"
         search="users"
         :currentSeach="filters"

@@ -5,11 +5,15 @@ import FormInput from "@/Components/FormInput.vue";
 import FormLayout from "@/Layouts/FormLayout.vue";
 import FormButton from "@/Components/FormButton.vue";
 import FormLabel from "@/Components/FormLabel.vue";
-import FormCheckBox from "@/Components/FormCheckBox.vue";
-import CheckBoxLayout from "@/Components/CheckBoxLayout.vue";
 import SelectionWithSearch from "@/Components/SelectionWithSearch.vue";
+import SectionTitle from "@/Components/SectionTitle.vue";
+import InputGroup from "@/Components/InputGroup.vue";
+import FormSection from "@/Components/FormSection.vue";
 import { router, useForm } from "@inertiajs/vue3";
+import StaticSelection from "@/Components/StaticSelection.vue";
 import { computed, onMounted, ref, watch } from "vue";
+import RadioButtonLabel from "@/Components/RadioButtonLabel.vue";
+import RadioButton from "@/Components/RadioButton.vue";
 
 defineOptions({
     layout: BaseLayout,
@@ -22,6 +26,8 @@ const props = defineProps({
 
 const form = useForm({
     civilStatus: "",
+    gender: "",
+    dateOfBirth: "",
     licenseNo: "",
     licenseType: "",
     streetAddress: "",
@@ -45,7 +51,9 @@ watch(
     (newValue) => {
         validLicense.value = newValue !== "No License";
         if (!validLicense.value) {
-            form.licenseNo = "";
+            form.licenseNo = "N/A";
+        } else if (form.licenseNo === "N/A") {
+            form.licenseNo = ""; // Clear 'N/A' if license is added
         }
     }
 );
@@ -105,13 +113,9 @@ onMounted(() => {
 
         <form @submit.prevent="submit" class="mt-5">
             <!-- Full Name Input Field -->
-            <div class="flex items-center mb-10">
-                <div class="basis-1/4 px-5">
-                    <h1 class="text-2xl text-gray-800 dark:text-slate-50">
-                        Name
-                    </h1>
-                </div>
-                <div class="basis-3/4">
+            <FormSection>
+                <SectionTitle> Name </SectionTitle>
+                <InputGroup>
                     <div class="flex gap-2 mb-2">
                         <!--First Name input field  -->
                         <div class="w-full">
@@ -155,17 +159,13 @@ onMounted(() => {
                             />
                         </div>
                     </div>
-                </div>
-            </div>
+                </InputGroup>
+            </FormSection>
 
             <!-- Address Information -->
-            <div class="flex items-center mb-10">
-                <div class="basis-1/4 px-5 self-start mt-8">
-                    <h1 class="text-2xl text-gray-800 dark:text-slate-50">
-                        Address
-                    </h1>
-                </div>
-                <div class="basis-3/4 flex flex-col">
+            <FormSection class="flex items-center mb-10">
+                <SectionTitle> Address </SectionTitle>
+                <InputGroup>
                     <!--Street Address input field  -->
                     <div class="w-full mb-6">
                         <FormLabel labelfor="streetAddress"
@@ -231,17 +231,13 @@ onMounted(() => {
                             />
                         </div>
                     </div>
-                </div>
-            </div>
+                </InputGroup>
+            </FormSection>
 
             <!-- Cell Phone Number -->
-            <div class="flex items-center mb-10">
-                <div class="basis-1/4 px-5">
-                    <h1 class="text-2xl text-gray-800 dark:text-slate-50">
-                        Cell Phone No.
-                    </h1>
-                </div>
-                <div class="basis-3/4">
+            <FormSection>
+                <SectionTitle> Cell Phone No. </SectionTitle>
+                <InputGroup>
                     <div class="w-1/2 mb-6">
                         <FormLabel labelfor="contactNo">Cell Phone#:</FormLabel>
                         <FormInput
@@ -253,46 +249,37 @@ onMounted(() => {
                             v-model="form.contactNo"
                         />
                     </div>
-                </div>
-            </div>
+                </InputGroup>
+            </FormSection>
 
             <!-- Civil Status Selection-->
-            <div class="flex items-center mb-10">
-                <div class="basis-1/4 px-5">
-                    <h1 class="text-2xl text-gray-800 dark:text-slate-50">
-                        Civil Status
-                    </h1>
-                </div>
-                <div class="basis-3/4">
+            <FormSection>
+                <SectionTitle> Civil Status </SectionTitle>
+                <InputGroup>
                     <div class="w-1/2 mb-6">
-                        <FormLabel labelfor="civil_status"
+                        <FormLabel labelfor="civilStatus"
                             >Civil Status:</FormLabel
                         >
-                        <select
-                            id="civil_status"
-                            class="bg-gray-50 w-full border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        <StaticSelection
+                            id="civilStatus"
                             v-model="form.civilStatus"
                         >
                             <option value="Single">Single</option>
                             <option value="Married">Married</option>
                             <option value="Divorced">Divorced</option>
                             <option value="Widowed">Widowed</option>
-                        </select>
+                        </StaticSelection>
                     </div>
-                </div>
-            </div>
+                </InputGroup>
+            </FormSection>
 
             <!-- Nationality Selection -->
-            <div class="flex items-center">
-                <div class="basis-1/4 px-5">
-                    <h1 class="text-2xl text-gray-800 dark:text-slate-50">
-                        Nationality
-                    </h1>
-                </div>
-                <div class="basis-3/4">
+            <FormSection class="flex items-center mb-10">
+                <SectionTitle> Nationality </SectionTitle>
+                <InputGroup>
                     <div class="w-1/2 mb-6">
-                        <FormLabel labelfor="civil_status"
-                            >Civil Status:</FormLabel
+                        <FormLabel labelfor="nationality"
+                            >Nationality:</FormLabel
                         >
 
                         <SelectionWithSearch
@@ -301,11 +288,101 @@ onMounted(() => {
                             placeholder="Select Nationality"
                         />
                     </div>
-                </div>
-            </div>
+                </InputGroup>
+            </FormSection>
 
+            <!-- Gender Selection -->
+            <FormSection class="flex items-center mb-10">
+                <SectionTitle> Gender </SectionTitle>
+                <InputGroup>
+                    <div class="w-1/2 mb-6">
+                        <FormLabel labelfor="gender">Gender:</FormLabel>
+
+                        <!-- Male Radio Button -->
+                        <RadioButton
+                            value="Male"
+                            v-model="form.gender"
+                            mb="4"
+                        />
+
+                        <!-- Female Radio Button -->
+                        <RadioButton
+                            value="Female"
+                            v-model="form.gender"
+                            mb=""
+                        />
+                    </div>
+                </InputGroup>
+            </FormSection>
+
+            <!-- Birth Day Selection -->
+            <FormSection>
+                <SectionTitle> Date of Birth </SectionTitle>
+                <InputGroup>
+                    <div class="w-1/2 mb-6">
+                        <FormLabel labelfor="date_of_birth">
+                            Date of Birth:</FormLabel
+                        >
+
+                        <FormInput
+                            width="full"
+                            type="date"
+                            name="contactNo"
+                            id="date_of_birth"
+                            placeholder="Driver Cell Phone Number"
+                            v-model="form.dateOfBirth"
+                        />
+                    </div>
+                </InputGroup>
+            </FormSection>
+
+            <!-- License Type Selection -->
+
+            <FormSection>
+                <SectionTitle> License Type </SectionTitle>
+                <InputGroup>
+                    <div class="w-1/2 mb-6">
+                        <FormLabel labelfor="lincenseType">
+                            License Type:</FormLabel
+                        >
+
+                        <StaticSelection
+                            id="lincenseType"
+                            v-model="form.licenseType"
+                        >
+                            <option value="Student">Student</option>
+                            <option value="Non-Pro">Non-Pro</option>
+                            <option value="Professional">Professional</option>
+                            <option value="No License">No License</option>
+                        </StaticSelection>
+                    </div>
+                </InputGroup>
+            </FormSection>
+
+            <!-- License Number Input Field -->
+            <FormSection>
+                <SectionTitle class="basis-1/4 px-5"> License No </SectionTitle>
+                <InputGroup>
+                    <div class="w-1/2 mb-6">
+                        <FormLabel labelfor="licenseNo"> License No:</FormLabel>
+
+                        <FormInput
+                            width="full"
+                            type="text"
+                            name="licenseNo"
+                            id="licenseNo"
+                            placeholder="Driver License Number"
+                            v-model="form.licenseNo"
+                            :disabled="!validLicense"
+                        />
+                    </div>
+                </InputGroup>
+            </FormSection>
+            <hr class="border border-gray-500 dark:border-slate-50" />
             <!-- Form Button -->
-            <FormButton> Submit </FormButton>
+            <div class="flex justify-center">
+                <FormButton> Submit </FormButton>
+            </div>
         </form>
     </FormLayout>
 </template>

@@ -22,6 +22,7 @@ import {
     faPlus,
     faArrowLeft,
     faUsers,
+    faUserNurse,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -36,7 +37,8 @@ library.add(
     faUserGear,
     faPlus,
     faArrowLeft,
-    faUsers
+    faUsers,
+    faUserNurse
 );
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";

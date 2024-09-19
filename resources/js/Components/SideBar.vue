@@ -103,6 +103,15 @@ defineEmits(["hideSidebar"]);
                 >
                     Users
                 </SideBarLink>
+
+                <!-- Enforcers -->
+                <SideBarLink
+                    link="/enforcers"
+                    :icon="['fas', 'user-nurse']"
+                    :active="$page.url.startsWith('/enforcers')"
+                >
+                    Enforcers
+                </SideBarLink>
             </ul>
         </aside>
     </div>
