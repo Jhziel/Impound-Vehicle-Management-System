@@ -40,6 +40,15 @@ library.add(
     faUsers,
     faUserNurse
 );
+// Set the components prop default to return our fresh components
+VSelect.props.components.default = () => ({
+    Deselect: {
+        render: () => h("span", "❌"),
+    },
+    OpenIndicator: {
+        render: () => h("span", "🔽"),
+    },
+});
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
