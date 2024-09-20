@@ -25,35 +25,35 @@ const props = defineProps({
 });
 
 const form = useForm({
-    civilStatus: "",
-    gender: "",
-    dateOfBirth: "",
-    licenseNo: "",
-    licenseType: "",
-    streetAddress: "",
+    first_name: "",
+    last_name: "",
+    middle_name_initial: "",
+    street_address: "",
     province: "",
     municipality: "",
     barangay: "",
-    postalCode: "",
+    postal_code: "",
+    contact_no: "",
     nationality: "",
-    firstName: "",
-    lastName: "",
-    middleInitial: "",
-    contactNo: "",
+    civil_status: "",
+    gender: "",
+    date_of_birth: "",
+    license_no: "",
+    license_type: "",
 });
 
 // License validation state
 const validLicense = ref(false);
 
-// Watch for changes in licenseType
+// Watch for changes in license_type
 watch(
-    () => form.licenseType,
+    () => form.license_type,
     (newValue) => {
         validLicense.value = newValue !== "No License";
         if (!validLicense.value) {
-            form.licenseNo = "N/A";
-        } else if (form.licenseNo === "N/A") {
-            form.licenseNo = ""; // Clear 'N/A' if license is added
+            form.license_no = "N/A";
+        } else if (form.license_no === "N/A") {
+            form.license_no = ""; // Clear 'N/A' if license is added
         }
     }
 );
@@ -99,8 +99,8 @@ const submit = () => {
     router.post("/drivers", form);
 };
 onMounted(() => {
-    form.licenseType = "Student";
-    form.civilStatus = "Single";
+    form.license_type = "Student";
+    form.civil_status = "Single";
 });
 </script>
 
@@ -119,43 +119,45 @@ onMounted(() => {
                     <div class="flex gap-2 mb-2">
                         <!--First Name input field  -->
                         <div class="w-full">
-                            <FormLabel labelfor="firstName"
+                            <FormLabel labelfor="first_name"
                                 >First Name:</FormLabel
                             >
                             <FormInput
                                 width="full"
                                 type="text"
-                                name="firstName"
-                                id="firstName"
+                                name="first_name"
+                                id="first_name"
                                 placeholder="User First Name"
-                                v-model="form.firstName"
+                                v-model="form.first_name"
                             />
                         </div>
 
                         <!--Last Name input field  -->
                         <div class="w-full">
-                            <FormLabel labelfor="lastName"
+                            <FormLabel labelfor="last_name"
                                 >Last Name:</FormLabel
                             >
                             <FormInput
                                 width="full"
                                 type="text"
-                                name="lastName"
-                                id="lastName"
+                                name="last_name"
+                                id="last_name"
                                 placeholder="User Last Name"
-                                v-model="form.lastName"
+                                v-model="form.last_name"
                             />
                         </div>
                         <!--Suffix  input field  -->
                         <div class="w-full basis-1/4">
-                            <FormLabel labelfor="middleInitial">M.I</FormLabel>
+                            <FormLabel labelfor="middle_name_initial"
+                                >M.I</FormLabel
+                            >
                             <FormInput
                                 width="full"
                                 type="text"
-                                name="middleInitial"
-                                id="middleInitial"
+                                name="middle_name_initial"
+                                id="middle_name_initial"
                                 placeholder="Driver M.I"
-                                v-model="form.middleInitial"
+                                v-model="form.middle_name_initial"
                             />
                         </div>
                     </div>
@@ -168,16 +170,16 @@ onMounted(() => {
                 <InputGroup>
                     <!--Street Address input field  -->
                     <div class="w-full mb-6">
-                        <FormLabel labelfor="streetAddress"
+                        <FormLabel labelfor="street_address"
                             >Street Address:</FormLabel
                         >
                         <FormInput
                             width="full"
                             type="text"
-                            name="streetAddress"
-                            id="streetAddress"
+                            name="street_address"
+                            id="street_address"
                             placeholder="Driver street address"
-                            v-model="form.streetAddress"
+                            v-model="form.street_address"
                         />
                     </div>
 
@@ -218,16 +220,16 @@ onMounted(() => {
 
                         <!-- Postal Code Input Field -->
                         <div class="flex flex-col w-full">
-                            <FormLabel labelfor="postalCode"
+                            <FormLabel labelfor="postal_code"
                                 >Postal Code:</FormLabel
                             >
                             <FormInput
                                 width="full"
-                                type="text"
-                                name="postalCode"
-                                id="postalCode"
+                                type="number"
+                                name="postal_code"
+                                id="postal_code"
                                 placeholder="ex.4025"
-                                v-model="form.postalCode"
+                                v-model="form.postal_code"
                             />
                         </div>
                     </div>
@@ -239,14 +241,16 @@ onMounted(() => {
                 <SectionTitle> Cell Phone No. </SectionTitle>
                 <InputGroup>
                     <div class="w-1/2 mb-6">
-                        <FormLabel labelfor="contactNo">Cell Phone#:</FormLabel>
+                        <FormLabel labelfor="contact_no"
+                            >Cell Phone#:</FormLabel
+                        >
                         <FormInput
                             width="full"
-                            type="text"
-                            name="contactNo"
-                            id="contactNo"
+                            type="number"
+                            name="contact_no"
+                            id="contact_no"
                             placeholder="Driver Cell Phone Number"
-                            v-model="form.contactNo"
+                            v-model="form.contact_no"
                         />
                     </div>
                 </InputGroup>
@@ -257,12 +261,12 @@ onMounted(() => {
                 <SectionTitle> Civil Status </SectionTitle>
                 <InputGroup>
                     <div class="w-1/2 mb-6">
-                        <FormLabel labelfor="civilStatus"
+                        <FormLabel labelfor="civil_status"
                             >Civil Status:</FormLabel
                         >
                         <StaticSelection
-                            id="civilStatus"
-                            v-model="form.civilStatus"
+                            id="civil_status"
+                            v-model="form.civil_status"
                         >
                             <option value="Single">Single</option>
                             <option value="Married">Married</option>
@@ -327,10 +331,10 @@ onMounted(() => {
                         <FormInput
                             width="full"
                             type="date"
-                            name="contactNo"
+                            name="contact_no"
                             id="date_of_birth"
                             placeholder="Driver Cell Phone Number"
-                            v-model="form.dateOfBirth"
+                            v-model="form.date_of_birth"
                         />
                     </div>
                 </InputGroup>
@@ -348,7 +352,7 @@ onMounted(() => {
 
                         <StaticSelection
                             id="lincenseType"
-                            v-model="form.licenseType"
+                            v-model="form.license_type"
                         >
                             <option value="Student">Student</option>
                             <option value="Non-Pro">Non-Pro</option>
@@ -364,15 +368,17 @@ onMounted(() => {
                 <SectionTitle class="basis-1/4 px-5"> License No </SectionTitle>
                 <InputGroup>
                     <div class="w-1/2 mb-6">
-                        <FormLabel labelfor="licenseNo"> License No:</FormLabel>
+                        <FormLabel labelfor="license_no">
+                            License No:</FormLabel
+                        >
 
                         <FormInput
                             width="full"
                             type="text"
-                            name="licenseNo"
-                            id="licenseNo"
+                            name="license_no"
+                            id="license_no"
                             placeholder="Driver License Number"
-                            v-model="form.licenseNo"
+                            v-model="form.license_no"
                             :disabled="!validLicense"
                         />
                     </div>
