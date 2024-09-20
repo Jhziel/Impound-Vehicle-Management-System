@@ -2,6 +2,7 @@
 import SideBar from "@/Components/SideBar.vue";
 import { useDark, useToggle } from "@vueuse/core";
 import Header from "@/Components/Header.vue";
+import ToastList from "@/Components/ToastList.vue";
 import { ref } from "vue";
 
 const isDark = useDark();
@@ -23,6 +24,7 @@ const toggleSideBar = () => {
                 @toggleSideBar="toggleSideBar"
             />
             <main class="px-8 overflow-y-auto">
+                <ToastList />
                 <slot />
             </main>
         </div>

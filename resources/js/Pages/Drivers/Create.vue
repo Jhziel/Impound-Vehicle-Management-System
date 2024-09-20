@@ -14,6 +14,7 @@ import StaticSelection from "@/Components/StaticSelection.vue";
 import { computed, onMounted, ref, watch } from "vue";
 import RadioButtonLabel from "@/Components/RadioButtonLabel.vue";
 import RadioButton from "@/Components/RadioButton.vue";
+import { errorMessages } from "vue/compiler-sfc";
 
 defineOptions({
     layout: BaseLayout,
@@ -22,6 +23,7 @@ defineOptions({
 const props = defineProps({
     nationality: Object,
     locations: Object,
+    errors: Object,
 });
 
 const form = useForm({
@@ -188,10 +190,14 @@ onMounted(() => {
                         <div class="flex flex-col w-full">
                             <FormLabel labelfor="province">Province:</FormLabel>
                             <SelectionWithSearch
+                                id="province"
                                 :data="province"
                                 v-model="form.province"
                                 placeholder="Select Province"
                             />
+                            <p v-if="errors.province" class="text-red-600">
+                                {{ errors.province }}
+                            </p>
                         </div>
 
                         <!-- Municipality Selection -->
@@ -288,6 +294,7 @@ onMounted(() => {
 
                         <SelectionWithSearch
                             :data="nationality"
+                            id="nationality"
                             v-model="form.nationality"
                             placeholder="Select Nationality"
                         />
@@ -300,7 +307,7 @@ onMounted(() => {
                 <SectionTitle> Gender </SectionTitle>
                 <InputGroup>
                     <div class="w-1/2 mb-6">
-                        <FormLabel labelfor="gender">Gender:</FormLabel>
+                        <FormLabel labelfor="Male">Gender:</FormLabel>
 
                         <!-- Male Radio Button -->
                         <RadioButton
@@ -379,7 +386,7 @@ onMounted(() => {
                             id="license_no"
                             placeholder="Driver License Number"
                             v-model="form.license_no"
-                            :disabled="!validLicense"
+                            :readonly="!validLicense"
                         />
                     </div>
                 </InputGroup>

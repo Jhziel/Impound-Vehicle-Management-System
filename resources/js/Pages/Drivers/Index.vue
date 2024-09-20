@@ -2,10 +2,11 @@
 import Table from "@/Components/Table.vue";
 import BaseLayout from "@/Layouts/BaseLayout.vue";
 import TableRow from "@/Components/TableRow.vue";
+import { router, useForm } from "@inertiajs/vue3";
 defineOptions({ layout: BaseLayout });
 
 const props = defineProps({
-    users: Object,
+    drivers: Object,
     filters: Object,
 });
 </script>
@@ -14,15 +15,20 @@ const props = defineProps({
     <Head>
         <title>Drivers</title>
     </Head>
+
     <Table
         :heads="['name', 'license no', 'license type', 'action']"
         linkName="New Driver"
         linkAdd="/drivers/create"
         pageTitle="Drivers List"
-        :pageData="users"
-        search="users"
+        :pageData="drivers"
+        search="drivers"
         :currentSeach="filters"
     >
-        <TableRow v-for="user in users.data" :key="user.id" :data="user" />
+        <TableRow
+            v-for="driver in drivers.data"
+            :key="driver.id"
+            :data="driver"
+        />
     </Table>
 </template>
