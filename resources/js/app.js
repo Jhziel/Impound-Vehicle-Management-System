@@ -23,6 +23,7 @@ import {
     faArrowLeft,
     faUsers,
     faUserNurse,
+    faGavel,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -38,7 +39,8 @@ library.add(
     faPlus,
     faArrowLeft,
     faUsers,
-    faUserNurse
+    faUserNurse,
+    faGavel
 );
 // Set the components prop default to return our fresh components
 VSelect.props.components.default = () => ({
