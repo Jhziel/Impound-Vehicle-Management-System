@@ -7,17 +7,18 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 
 class DriverController extends Controller
 {
 
     public function index(Request $request)
     {
-        $users = User::query()->when($request->input('search'), function ($query, $search) {
+        $drivers = Driver::query()->when($request->input('search'), function ($query, $search) {
             $query->where('name', 'like', "%{$search}%");
         })->paginate(4)->withQueryString();
         return Inertia::render('Drivers/Index', [
-            'users' => $users,
+            'drivers' => $drivers,
             'filters' => $request->only('search'),
         ]);
     }
@@ -42,7 +43,33 @@ class DriverController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $data = $request->validate([
+            'license_no' => [
+                'required',
+                'string',
+                Rule::unique('drivers')->where(function ($query) {
+                    return $query->where('license_no', '!=', 'N/A');
+                })
+            ],
+            'license_type' => ['required', 'string'],
+            'first_name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'middle_name_initial' => ['required', 'string'],
+            'street_address' => ['required', 'string'],
+            'province' => ['required', 'string'],
+            'municipality' => ['required', 'string'],
+            'barangay' => ['required', 'string'],
+            'postal_code' => ['required', 'integer'],
+            'contact_no' => ['required', 'integer'],
+            'nationality' => ['required', 'string'],
+            'civil_status' => ['required', 'string'],
+            'gender' => ['required', 'string'],
+            'date_of_birth' => ['required', 'string'],
+        ]);
+
+        Driver::create($data);
+
+        return redirect('/drivers')->with('message', 'Successfully Created the Driver');
     }
 
     /**

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
-            $table->string('license_no')->unique();
+            $table->string('license_no')->nullable()->unique();
             $table->string('license_type');
             $table->string('first_name');
             $table->string('last_name');
