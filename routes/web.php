@@ -6,6 +6,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ViolationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/users', UserController::class)->middleware('permission:Manage Users');
     Route::resource('/drivers', DriverController::class)/* ->middleware('permission:Manage Drivers') */;
     Route::resource('/enforcers', EnforcerController::class)/* ->middleware('permission:Manage Drivers') */;
+    Route::resource('/violations', ViolationController::class)/* ->middleware('permission:Manage Drivers') */;
 });
 
 

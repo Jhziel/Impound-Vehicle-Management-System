@@ -112,6 +112,15 @@ defineEmits(["hideSidebar"]);
                 >
                     Enforcers
                 </SideBarLink>
+
+                <!-- Violation -->
+                <SideBarLink
+                    link="/violations"
+                    :icon="['fas', 'gavel']"
+                    :active="$page.url.startsWith('/violations')"
+                >
+                    Violations
+                </SideBarLink>
             </ul>
         </aside>
     </div>

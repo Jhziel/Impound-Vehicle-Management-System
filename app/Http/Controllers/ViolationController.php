@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Violation;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ViolationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $users = User::query()->when($request->input('search'), function ($query, $search) {
+            $query->where('name', 'like', "%{$search}%");
+        })->paginate(4)->withQueryString();
+        return Inertia::render('Violations/Index', [
+            'users' => $users,
+            'filters' => $request->only('search'),
+        ]);
     }
 
     /**
@@ -20,7 +28,7 @@ class ViolationController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Violations/Create');
     }
 
     /**
