@@ -14,10 +14,19 @@ return new class extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
             $table->string('license_no')->unique();
-            $table->string('name');
-            $table->string('address');
+            $table->string('license_type');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('middle_name_initial');
+            $table->string('street_address');
+            $table->string('province');
+            $table->string('municipality');
+            $table->string('barangay');
+            $table->integer('postal_code');
+            $table->integer('contact_no');
             $table->string('nationality');
-            $table->string('sex');
+            $table->string('civil_status');
+            $table->string('gender');
             $table->date('date_of_birth');
             $table->timestamps();
         });

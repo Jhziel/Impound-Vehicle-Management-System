@@ -64,11 +64,6 @@ defineEmits(["hideSidebar"]);
 
                 <!-- Permissions -->
                 <SideBarLink
-                    v-if="
-                        $page.props.auth.user_permissions.includes(
-                            'Manage Permissions'
-                        )
-                    "
                     link="/permissions"
                     :icon="['fas', 'user-lock']"
                     :active="$page.url.startsWith('/permissions')"
@@ -78,11 +73,6 @@ defineEmits(["hideSidebar"]);
 
                 <!-- Roles -->
                 <SideBarLink
-                    v-if="
-                        $page.props.auth.user_permissions.includes(
-                            'Manage Roles'
-                        )
-                    "
                     link="/roles"
                     :icon="['fas', 'user-gear']"
                     :active="$page.url.startsWith('/roles')"
@@ -92,11 +82,6 @@ defineEmits(["hideSidebar"]);
 
                 <!-- Users -->
                 <SideBarLink
-                    v-if="
-                        $page.props.auth.user_permissions.includes(
-                            'Manage Users'
-                        )
-                    "
                     link="/users"
                     :icon="['fas', 'users']"
                     :active="$page.url.startsWith('/users')"
