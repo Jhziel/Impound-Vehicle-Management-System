@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\EnforcerController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -30,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/roles', RoleController::class)->middleware('permission:Manage Roles');
     Route::resource('/users', UserController::class)->middleware('permission:Manage Users');
     Route::resource('/drivers', DriverController::class)/* ->middleware('permission:Manage Drivers') */;
+    Route::resource('/enforcers', EnforcerController::class)/* ->middleware('permission:Manage Drivers') */;
 });
 
 
