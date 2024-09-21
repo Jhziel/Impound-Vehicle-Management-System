@@ -1,8 +1,10 @@
 <script setup>
+import { computed } from "vue";
 import { onMounted } from "vue";
 
-defineProps({
+const props = defineProps({
     message: String,
+    type: String,
 });
 
 onMounted(() => {
@@ -10,36 +12,37 @@ onMounted(() => {
 });
 
 const emit = defineEmits(["remove"]);
+
+const backGround = computed(() => {
+    if (props.type === "success") {
+        return "bg-green-500 dark:bg-green-700";
+    }
+    return "bg-red-500 dark:bg-red-700";
+});
+
+const icon = computed(() => {
+    if (props.type === "success") {
+        return ["fas", "circle-check"];
+    }
+
+    return ["fas", "circle-xmark"];
+});
 </script>
 <template>
     <div
-        class="flex items-center p-4 text-slate-50 bg-green-500 rounded-lg shadow dark:bg-green-700"
+        :class="backGround"
+        class="flex items-center p-4 text-slate-50 rounded-lg shadow"
         role="alert"
     >
         <div
-            class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:bg-blue-800 dark:text-blue-200"
+            class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8text-slate-50 text-lg"
         >
-            <svg
-                class="w-4 h-4"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 20"
-            >
-                <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15.147 15.085a7.159 7.159 0 0 1-6.189 3.307A6.713 6.713 0 0 1 3.1 15.444c-2.679-4.513.287-8.737.888-9.548A4.373 4.373 0 0 0 5 1.608c1.287.953 6.445 3.218 5.537 10.5 1.5-1.122 2.706-3.01 2.853-6.14 1.433 1.049 3.993 5.395 1.757 9.117Z"
-                />
-            </svg>
-            <span class="sr-only">Fire icon</span>
+            <font-awesome-icon :icon="icon" />
         </div>
         <div class="ms-3 text-sm font-normal">{{ message }}</div>
         <button
             type="button"
-            class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+            class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-200 dark:hover:bg-gray-700"
             data-dismiss-target="#toast-default"
             aria-label="Close"
             @click="emit('remove')"

@@ -1,15 +1,20 @@
 <script setup>
 defineProps({
-    message: {
+    errorMessage: {
         type: String,
+        
     },
+    errors: {
+        type:Object,
+        default: "",
+    }
 });
 </script>
 
 <template>
-    <div v-show="message">
+    <div v-if="errors[errorMessage]">
         <p class="text-sm text-red-600">
-            {{ message }}
+            {{ errors[errorMessage] }}
         </p>
     </div>
 </template>

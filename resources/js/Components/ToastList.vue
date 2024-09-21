@@ -11,6 +11,7 @@ let removeFinishEventListener = router.on("finish", () => {
     if (page.props.flash.message) {
         items.value.unshift({
             message: page.props.flash.message,
+            type: page.props.flash.message_type,
             key: Symbol(),
         });
     }
@@ -37,6 +38,7 @@ const remove = (index) => {
             v-for="(item, index) in items"
             :key="item.key"
             :message="item.message"
+            :type="item.type"
             @remove="remove(index)"
         />
     </TransitionGroup>
