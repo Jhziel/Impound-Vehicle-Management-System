@@ -1,5 +1,5 @@
 <template>
-    <section class="flex items-center mb-10">
+    <section class="flex items-center ">
         <slot />
     </section>
 </template>

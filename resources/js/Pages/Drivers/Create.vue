@@ -13,6 +13,7 @@ import { router, useForm } from "@inertiajs/vue3";
 import StaticSelection from "@/Components/StaticSelection.vue";
 import { computed, onMounted, ref, watch } from "vue";
 import RadioButtonLabel from "@/Components/RadioButtonLabel.vue";
+import InputError from "@/Components/InputError.vue";
 import RadioButton from "@/Components/RadioButton.vue";
 import { errorMessages } from "vue/compiler-sfc";
 
@@ -113,7 +114,7 @@ onMounted(() => {
     <FormLayout>
         <PageHeading pageTitle="Create Driver" link="/drivers" />
 
-        <form @submit.prevent="submit" class="mt-5">
+        <form @submit.prevent="submit" class="mt-5 space-y-10">
             <!-- Full Name Input Field -->
             <FormSection>
                 <SectionTitle> Name </SectionTitle>
@@ -132,6 +133,10 @@ onMounted(() => {
                                 placeholder="User First Name"
                                 v-model="form.first_name"
                             />
+                            <InputError
+                                :errors="errors"
+                                errorMessage="first_name"
+                            />
                         </div>
 
                         <!--Last Name input field  -->
@@ -147,6 +152,10 @@ onMounted(() => {
                                 placeholder="User Last Name"
                                 v-model="form.last_name"
                             />
+                            <InputError
+                                :errors="errors"
+                                errorMessage="last_name"
+                            />
                         </div>
                         <!--Suffix  input field  -->
                         <div class="w-full basis-1/4">
@@ -160,6 +169,11 @@ onMounted(() => {
                                 id="middle_name_initial"
                                 placeholder="Driver M.I"
                                 v-model="form.middle_name_initial"
+                                maxlength="3"
+                            />
+                            <InputError
+                                :errors="errors"
+                                errorMessage="middle_name_initial"
                             />
                         </div>
                     </div>
@@ -183,6 +197,10 @@ onMounted(() => {
                             placeholder="Driver street address"
                             v-model="form.street_address"
                         />
+                        <InputError
+                            :errors="errors"
+                            errorMessage="street_address"
+                        />
                     </div>
 
                     <div class="flex gap-2 mb-6">
@@ -195,9 +213,10 @@ onMounted(() => {
                                 v-model="form.province"
                                 placeholder="Select Province"
                             />
-                            <p v-if="errors.province" class="text-red-600">
-                                {{ errors.province }}
-                            </p>
+                            <InputError
+                                :errors="errors"
+                                errorMessage="province"
+                            />
                         </div>
 
                         <!-- Municipality Selection -->
@@ -210,6 +229,10 @@ onMounted(() => {
                                 v-model="form.municipality"
                                 placeholder="Select Municipality"
                             />
+                            <InputError
+                                :errors="errors"
+                                errorMessage="municipality"
+                            />
                         </div>
                     </div>
 
@@ -221,6 +244,10 @@ onMounted(() => {
                                 :data="barangay"
                                 v-model="form.barangay"
                                 placeholder="Select Barangay"
+                            />
+                            <InputError
+                                :errors="errors"
+                                errorMessage="barangay"
                             />
                         </div>
 
@@ -236,6 +263,10 @@ onMounted(() => {
                                 id="postal_code"
                                 placeholder="ex.4025"
                                 v-model="form.postal_code"
+                            />
+                            <InputError
+                                :errors="errors"
+                                errorMessage="postal_code"
                             />
                         </div>
                     </div>
@@ -258,6 +289,10 @@ onMounted(() => {
                             placeholder="Driver Cell Phone Number"
                             v-model="form.contact_no"
                         />
+                        <InputError
+                            :errors="errors"
+                            errorMessage="contact_no"
+                        />
                     </div>
                 </InputGroup>
             </FormSection>
@@ -279,6 +314,10 @@ onMounted(() => {
                             <option value="Divorced">Divorced</option>
                             <option value="Widowed">Widowed</option>
                         </StaticSelection>
+                        <InputError
+                            :errors="errors"
+                            errorMessage="civil_status"
+                        />
                     </div>
                 </InputGroup>
             </FormSection>
@@ -297,6 +336,10 @@ onMounted(() => {
                             id="nationality"
                             v-model="form.nationality"
                             placeholder="Select Nationality"
+                        />
+                        <InputError
+                            :errors="errors"
+                            errorMessage="nationality"
                         />
                     </div>
                 </InputGroup>
@@ -322,6 +365,7 @@ onMounted(() => {
                             v-model="form.gender"
                             mb=""
                         />
+                        <InputError :errors="errors" errorMessage="gender" />
                     </div>
                 </InputGroup>
             </FormSection>
@@ -340,8 +384,12 @@ onMounted(() => {
                             type="date"
                             name="contact_no"
                             id="date_of_birth"
-                            placeholder="Driver Cell Phone Number"
+                            placeholder="Driver BitrthDay"
                             v-model="form.date_of_birth"
+                        />
+                        <InputError
+                            :errors="errors"
+                            errorMessage="date_of_birth"
                         />
                     </div>
                 </InputGroup>
@@ -366,6 +414,10 @@ onMounted(() => {
                             <option value="Professional">Professional</option>
                             <option value="No License">No License</option>
                         </StaticSelection>
+                        <InputError
+                            :errors="errors"
+                            errorMessage="license_type"
+                        />
                     </div>
                 </InputGroup>
             </FormSection>
@@ -387,6 +439,10 @@ onMounted(() => {
                             placeholder="Driver License Number"
                             v-model="form.license_no"
                             :readonly="!validLicense"
+                        />
+                        <InputError
+                            :errors="errors"
+                            errorMessage="license_no"
                         />
                     </div>
                 </InputGroup>

@@ -8,6 +8,8 @@ import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import VSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
     faSun,
@@ -24,6 +26,8 @@ import {
     faUsers,
     faUserNurse,
     faGavel,
+    faCircleCheck,
+    faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -40,7 +44,9 @@ library.add(
     faArrowLeft,
     faUsers,
     faUserNurse,
-    faGavel
+    faGavel,
+    faCircleCheck,
+    faCircleXmark
 );
 // Set the components prop default to return our fresh components
 VSelect.props.components.default = () => ({
@@ -69,8 +75,10 @@ createInertiaApp({
             .component("v-select", VSelect)
             .use(plugin)
             .use(ZiggyVue)
+            .use(VueSweetalert2)
             .mount(el);
     },
+
     progress: {
         color: "#4f46e5",
         showSpinner: true,

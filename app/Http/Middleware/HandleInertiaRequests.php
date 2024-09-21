@@ -37,7 +37,8 @@ class HandleInertiaRequests extends Middleware
                 'user_permissions' => $request->user() ? $request->user()->getPermissionNames() : [],
             ],
             'flash' => [
-                'message' => session('message')
+                'message' => session('message'),
+                'message_type' => session('message_type') // Pass the message type here
             ]
         ];
     }
