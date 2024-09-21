@@ -88,7 +88,7 @@ const barangay = computed(() => {
 watch(
     () => form.province,
     () => {
-        if (!initialize.value) {
+        if (initialize.value) {
             form.municipality = ""; // Reset municipality when province changes
         }
     }
@@ -97,7 +97,7 @@ watch(
 watch(
     () => form.municipality,
     () => {
-        if (!initialize.value) {
+        if (initialize.value) {
             form.barangay = ""; // Reset municipality when province changes
         }
     }

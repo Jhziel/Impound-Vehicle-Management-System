@@ -24,20 +24,20 @@ const props = defineProps({
 });
 
 const form = useForm({
-    civilStatus: "",
-    gender: "",
-    dateOfBirth: "",
-    streetAddress: "",
+    first_name: "",
+    last_name: "",
+    middle_name_initial: "",
+    street_address: "",
     province: "",
     municipality: "",
     barangay: "",
-    postalCode: "",
+    postal_code: "",
+    contact_no: "",
     nationality: "",
-    firstName: "",
-    lastName: "",
-    middleInitial: "",
-    contactNo: "",
-    badgeNo: "",
+    civil_status: "",
+    gender: "",
+    date_of_birth: "",
+    badge_no: "",
 });
 
 //get province data
@@ -78,7 +78,7 @@ watch(
 );
 
 const submit = () => {
-    router.post("/drivers", form);
+    router.post("/enforcers", form);
 };
 onMounted(() => {
     form.civilStatus = "Single";
