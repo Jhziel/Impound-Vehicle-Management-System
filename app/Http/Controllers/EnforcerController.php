@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 
 class EnforcerController extends Controller
 {
@@ -44,16 +45,50 @@ class EnforcerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        try {
+            // Perform validation
+            $data = $request->validate([
+                'badge_no' => ['required', 'unique:enforcers,badge_no'],
+                'first_name' => ['required', 'string'],
+                'last_name' => ['required', 'string'],
+                'middle_name_initial' => ['required', 'string', 'max:3'],
+                'street_address' => ['required', 'string'],
+                'province' => ['required', 'string'],
+                'municipality' => ['required', 'string'],
+                'barangay' => ['required', 'string'],
+                'postal_code' => ['required', 'integer'],
+                'contact_no' => ['required', 'integer'],
+                'nationality' => ['required', 'string'],
+                'civil_status' => ['required', 'string'],
+                'gender' => ['required', 'string'],
+                'date_of_birth' => ['required', 'string'],
+            ]);
+
+            // Create the driver
+            Enforcer::create($data);
+
+            // Redirect with success message
+            return redirect('/drivers')->with([
+                'message' => 'Successfully Created the Driver',
+                'message_type' => 'success' // This will indicate a success
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Handle validation errors
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput() // Keep input data to help the user fix errors
+                ->with([
+                    'message' => 'There were errors with your submission.',
+                    'message_type' => 'error' // This will indicate an error
+                ]);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Enforcer $enforcer)
-    {
-        //
-    }
+    public function show(Enforcer $enforcer) {}
 
     /**
      * Show the form for editing the specified resource.
