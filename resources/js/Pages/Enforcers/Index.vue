@@ -4,7 +4,7 @@ import BaseLayout from "@/Layouts/BaseLayout.vue";
 import TableRow from "@/Components/TableRow.vue";
 import TableItems from "@/Components/TableItems.vue";
 import Swal from "sweetalert2";
-import { Link, router } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 defineOptions({ layout: BaseLayout });
 
 const props = defineProps({

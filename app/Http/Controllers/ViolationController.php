@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Violation;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class ViolationController extends Controller
@@ -76,7 +77,7 @@ class ViolationController extends Controller
      */
     public function edit(Violation $violation)
     {
-        //
+        return Inertia::render('Violations/Edit', ['violation' => $violation]);
     }
 
     /**
@@ -84,7 +85,34 @@ class ViolationController extends Controller
      */
     public function update(Request $request, Violation $violation)
     {
-        //
+        try {
+            $data = $request->validate([
+                'violation_name' => [
+                    'required',
+                    Rule::unique('violations', 'violation_name')->ignore($violation->id)
+                ],
+                'violation_code' => [
+                    'required',
+                    Rule::unique('violations', 'violation_code')->ignore($violation->id)
+                ],
+                'fine' => ['required', 'integer'],
+                'violation_description' => ['required', 'string']
+            ]);
+
+            $violation->update($data);
+
+            return redirect('/violations')->with([
+                'message' =>  'Successfully Updated the Violation',
+                'message_type' => 'success'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {   // Handle validation errors
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->with([
+                    'message' => 'There were errors with your submission.',
+                    'message_type' => 'error' // This will indicate an error
+                ]);
+        }
     }
 
     /**
@@ -92,6 +120,15 @@ class ViolationController extends Controller
      */
     public function destroy(Violation $violation)
     {
-        //
+        try {
+            $violation->delete();
+
+            return redirect('/violations')->with([
+                'message' => 'Successfully Deleted the Violation',
+                'message_type' => 'success'
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

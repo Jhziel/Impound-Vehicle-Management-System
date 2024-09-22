@@ -9,6 +9,7 @@ import SelectionWithSearch from "@/Components/SelectionWithSearch.vue";
 import SectionTitle from "@/Components/SectionTitle.vue";
 import InputGroup from "@/Components/InputGroup.vue";
 import FormSection from "@/Components/FormSection.vue";
+import InputError from "@/Components/InputError.vue";
 import { router, useForm } from "@inertiajs/vue3";
 import StaticSelection from "@/Components/StaticSelection.vue";
 import { computed, onMounted, watch } from "vue";
@@ -124,6 +125,9 @@ onMounted(() => {
                             placeholder="Enforcer Badge Number"
                             v-model="form.badge_no"
                         />
+
+                        <!-- Badge Number Error -->
+                        <InputError :errors="errors" errorMessage="badge_no" />
                     </div>
                 </InputGroup>
             </FormSection>
@@ -146,6 +150,12 @@ onMounted(() => {
                                 placeholder="User First Name"
                                 v-model="form.first_name"
                             />
+
+                            <!-- First Name Error -->
+                            <InputError
+                                :errors="errors"
+                                errorMessage="first_name"
+                            />
                         </div>
 
                         <!--Last Name input field  -->
@@ -161,8 +171,14 @@ onMounted(() => {
                                 placeholder="User Last Name"
                                 v-model="form.last_name"
                             />
+
+                            <!-- Last Name Error -->
+                            <InputError
+                                :errors="errors"
+                                errorMessage="last_name"
+                            />
                         </div>
-                        <!--Suffix  input field  -->
+                        <!--Middle Initial  input field  -->
                         <div class="w-full basis-1/4">
                             <FormLabel labelfor="middle_name_initial"
                                 >M.I</FormLabel
@@ -172,9 +188,15 @@ onMounted(() => {
                                 type="text"
                                 name="middle_name_initial"
                                 id="middle_name_initial"
-                                placeholder="enforcer M.I"
+                                placeholder="Driver M.I"
                                 v-model="form.middle_name_initial"
                                 maxlength="3"
+                            />
+
+                            <!-- Middle Initial Error -->
+                            <InputError
+                                :errors="errors"
+                                errorMessage="middle_name_initial"
                             />
                         </div>
                     </div>
@@ -195,8 +217,14 @@ onMounted(() => {
                             type="text"
                             name="street_address"
                             id="street_address"
-                            placeholder="enforcer street address"
+                            placeholder="Driver street address"
                             v-model="form.street_address"
+                        />
+
+                        <!-- Street Address Error -->
+                        <InputError
+                            :errors="errors"
+                            errorMessage="street_address"
                         />
                     </div>
 
@@ -208,6 +236,12 @@ onMounted(() => {
                                 :data="province"
                                 v-model="form.province"
                                 placeholder="Select Province"
+                            />
+
+                            <!-- Province Error -->
+                            <InputError
+                                :errors="errors"
+                                errorMessage="province"
                             />
                         </div>
 
@@ -221,6 +255,12 @@ onMounted(() => {
                                 v-model="form.municipality"
                                 placeholder="Select Municipality"
                             />
+
+                            <!-- Municipality Error -->
+                            <InputError
+                                :errors="errors"
+                                errorMessage="municipality"
+                            />
                         </div>
                     </div>
 
@@ -232,6 +272,12 @@ onMounted(() => {
                                 :data="barangay"
                                 v-model="form.barangay"
                                 placeholder="Select Barangay"
+                            />
+
+                            <!-- Barangay Error -->
+                            <InputError
+                                :errors="errors"
+                                errorMessage="barangay"
                             />
                         </div>
 
@@ -247,6 +293,12 @@ onMounted(() => {
                                 id="postal_code"
                                 placeholder="ex.4025"
                                 v-model="form.postal_code"
+                            />
+
+                            <!-- Postal Code Error -->
+                            <InputError
+                                :errors="errors"
+                                errorMessage="postal_code"
                             />
                         </div>
                     </div>
@@ -266,8 +318,14 @@ onMounted(() => {
                             type="number"
                             name="contact_no"
                             id="contact_no"
-                            placeholder="enforcer Cell Phone Number"
+                            placeholder="Driver Cell Phone Number"
                             v-model="form.contact_no"
+                        />
+
+                        <!-- Cell Phone# Error -->
+                        <InputError
+                            :errors="errors"
+                            errorMessage="contact_no"
                         />
                     </div>
                 </InputGroup>
@@ -290,6 +348,12 @@ onMounted(() => {
                             <option value="Divorced">Divorced</option>
                             <option value="Widowed">Widowed</option>
                         </StaticSelection>
+
+                        <!-- Civil Status Error -->
+                        <InputError
+                            :errors="errors"
+                            errorMessage="civil_status"
+                        />
                     </div>
                 </InputGroup>
             </FormSection>
@@ -309,6 +373,9 @@ onMounted(() => {
                             placeholder="Select Nationality"
                         />
                     </div>
+
+                    <!-- Nationality Error -->
+                    <InputError :errors="errors" errorMessage="nationality" />
                 </InputGroup>
             </FormSection>
 
@@ -332,6 +399,9 @@ onMounted(() => {
                             v-model="form.gender"
                             mb=""
                         />
+
+                        <!-- Gender Error -->
+                        <InputError :errors="errors" errorMessage="gender" />
                     </div>
                 </InputGroup>
             </FormSection>
@@ -350,8 +420,14 @@ onMounted(() => {
                             type="date"
                             name="contact_no"
                             id="date_of_birth"
-                            placeholder="enforcer Cell Phone Number"
+                            placeholder="Driver Cell Phone Number"
                             v-model="form.date_of_birth"
+                        />
+
+                        <!-- Date of Birth Error -->
+                        <InputError
+                            :errors="errors"
+                            errorMessage="date_of_birth"
                         />
                     </div>
                 </InputGroup>

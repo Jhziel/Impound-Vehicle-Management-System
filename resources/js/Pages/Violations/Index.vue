@@ -2,13 +2,31 @@
 import Table from "@/Components/Table.vue";
 import BaseLayout from "@/Layouts/BaseLayout.vue";
 import TableRow from "@/Components/TableRow.vue";
+import Swal from "sweetalert2";
 import TableItems from "@/Components/TableItems.vue";
+import { router } from "@inertiajs/vue3";
 defineOptions({ layout: BaseLayout });
 
 const props = defineProps({
     violations: Object,
     filters: Object,
 });
+
+const deleteViolation = (id) => {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(`/violations/${id}`);
+        }
+    });
+};
 </script>
 
 <template>
@@ -38,13 +56,13 @@ const props = defineProps({
                 <TableItems>₱ {{ data.fine }}</TableItems>
                 <td class="px-6 py-4 flex gap-3">
                     <Link
-                        :href="`/enforcers/${data.id}/edit`"
+                        :href="`/violations/${data.id}/edit`"
                         class="font-medium bg-blue-600 dark:bg-blue-500 text-slate-50 px-4 py-2"
                         >Edit</Link
                     >
                     <button
                         class="font-medium bg-red-600 dark:bg-red-500 text-slate-50 px-4 py-2"
-                        @click="deleteEnforcer(data.id)"
+                        @click="deleteViolation(data.id)"
                     >
                         Delete
                     </button>
