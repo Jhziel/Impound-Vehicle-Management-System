@@ -11,6 +11,7 @@ class Enforcer extends Model
 
     protected $fillable = [
         'badge_no',
+        'status',
         'first_name',
         'last_name',
         'middle_name_initial',

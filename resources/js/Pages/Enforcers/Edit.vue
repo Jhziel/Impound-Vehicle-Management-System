@@ -11,8 +11,7 @@ import InputGroup from "@/Components/InputGroup.vue";
 import FormSection from "@/Components/FormSection.vue";
 import { router, useForm } from "@inertiajs/vue3";
 import StaticSelection from "@/Components/StaticSelection.vue";
-import { computed, onMounted, ref, watch } from "vue";
-import InputError from "@/Components/InputError.vue";
+import { computed, onMounted, watch } from "vue";
 import RadioButton from "@/Components/RadioButton.vue";
 
 defineOptions({
@@ -23,9 +22,8 @@ const props = defineProps({
     nationality: Object,
     locations: Object,
     errors: Object,
-    driver: Object,
+    enforcer: Object,
 });
-console.log(props.driver);
 
 const form = useForm({
     first_name: "",
@@ -41,26 +39,9 @@ const form = useForm({
     civil_status: "",
     gender: "",
     date_of_birth: "",
-    license_no: "",
-    license_type: "",
+    badge_no: "",
+    status: "",
 });
-
-// License validation state
-const validLicense = ref(false);
-const initialize = ref(false);
-
-// Watch for changes in license_type
-watch(
-    () => form.license_type,
-    (newValue) => {
-        validLicense.value = newValue !== "No License";
-        if (!validLicense.value) {
-            form.license_no = "N/A";
-        } else if (form.license_no === "N/A") {
-            form.license_no = ""; // Clear 'N/A' if license is added
-        }
-    }
-);
 
 //get province data
 const province = Object.keys(props.locations).sort();
@@ -88,52 +69,65 @@ const barangay = computed(() => {
 watch(
     () => form.province,
     () => {
-        if (initialize.value) {
-            form.municipality = ""; // Reset municipality when province changes
-        }
+        form.municipality = ""; // Reset municipality when province changes
     }
 );
 //Watch for changes in municipality
 watch(
     () => form.municipality,
     () => {
-        if (initialize.value) {
-            form.barangay = ""; // Reset municipality when province changes
-        }
+        form.barangay = ""; // Reset municipality when province changes
     }
 );
 
 const submit = (id) => {
-    router.put(`/drivers/${id}`, form);
+    router.put(`/enforcers/${id}`, form);
 };
 onMounted(() => {
-    form.license_type = props.driver.license_type;
-    form.civil_status = props.driver.civil_status;
-    form.first_name = props.driver.first_name;
-    form.last_name = props.driver.last_name;
-    form.middle_name_initial = props.driver.middle_name_initial;
-    form.street_address = props.driver.street_address;
-    form.province = props.driver.province;
-    form.municipality = props.driver.municipality;
-    form.barangay = props.driver.barangay;
-    form.postal_code = props.driver.postal_code;
-    form.contact_no = props.driver.contact_no;
-    form.nationality = props.driver.nationality;
-    form.gender = props.driver.gender;
-    form.date_of_birth = props.driver.date_of_birth;
-    form.license_no = props.driver.license_no;
-    initialize.value = true;
+    form.badge_no = props.enforcer.badge_no;
+    form.civil_status = props.enforcer.civil_status;
+    form.first_name = props.enforcer.first_name;
+    form.last_name = props.enforcer.last_name;
+    form.middle_name_initial = props.enforcer.middle_name_initial;
+    form.street_address = props.enforcer.street_address;
+    form.province = props.enforcer.province;
+    form.municipality = props.enforcer.municipality;
+    form.barangay = props.enforcer.barangay;
+    form.postal_code = props.enforcer.postal_code;
+    form.contact_no = props.enforcer.contact_no;
+    form.nationality = props.enforcer.nationality;
+    form.gender = props.enforcer.gender;
+    form.date_of_birth = props.enforcer.date_of_birth;
+    form.status = props.enforcer.status;
 });
 </script>
 
 <template>
     <Head>
-        <title>Create-Driver</title>
+        <title>Create-Enforcer</title>
     </Head>
     <FormLayout>
-        <PageHeading pageTitle="Update Driver" link="/drivers" />
+        <PageHeading pageTitle="Update Enforcer" link="/enforcers" />
 
-        <form @submit.prevent="submit(driver.id)" class="mt-5 space-y-10">
+        <form @submit.prevent="submit(enforcer.id)" class="mt-5 space-y-10">
+            <!-- Badge Number Input Field -->
+            <FormSection>
+                <SectionTitle> Badge No. </SectionTitle>
+                <InputGroup>
+                    <div class="w-1/2 mb-6">
+                        <FormLabel labelfor="badge_no">Badge#:</FormLabel>
+                        <FormInput
+                            width="full"
+                            type="text"
+                            name="badge_no"
+                            id="badge_no"
+                            placeholder="Enforcer Badge Number"
+                            v-model="form.badge_no"
+                        />
+                    </div>
+                </InputGroup>
+            </FormSection>
+
             <!-- Full Name Input Field -->
             <FormSection>
                 <SectionTitle> Name </SectionTitle>
@@ -152,10 +146,6 @@ onMounted(() => {
                                 placeholder="User First Name"
                                 v-model="form.first_name"
                             />
-                            <InputError
-                                :errors="errors"
-                                errorMessage="first_name"
-                            />
                         </div>
 
                         <!--Last Name input field  -->
@@ -171,10 +161,6 @@ onMounted(() => {
                                 placeholder="User Last Name"
                                 v-model="form.last_name"
                             />
-                            <InputError
-                                :errors="errors"
-                                errorMessage="last_name"
-                            />
                         </div>
                         <!--Suffix  input field  -->
                         <div class="w-full basis-1/4">
@@ -186,13 +172,9 @@ onMounted(() => {
                                 type="text"
                                 name="middle_name_initial"
                                 id="middle_name_initial"
-                                placeholder="Driver M.I"
+                                placeholder="enforcer M.I"
                                 v-model="form.middle_name_initial"
                                 maxlength="3"
-                            />
-                            <InputError
-                                :errors="errors"
-                                errorMessage="middle_name_initial"
                             />
                         </div>
                     </div>
@@ -213,12 +195,8 @@ onMounted(() => {
                             type="text"
                             name="street_address"
                             id="street_address"
-                            placeholder="Driver street address"
+                            placeholder="enforcer street address"
                             v-model="form.street_address"
-                        />
-                        <InputError
-                            :errors="errors"
-                            errorMessage="street_address"
                         />
                     </div>
 
@@ -227,14 +205,9 @@ onMounted(() => {
                         <div class="flex flex-col w-full">
                             <FormLabel labelfor="province">Province:</FormLabel>
                             <SelectionWithSearch
-                                id="province"
                                 :data="province"
                                 v-model="form.province"
                                 placeholder="Select Province"
-                            />
-                            <InputError
-                                :errors="errors"
-                                errorMessage="province"
                             />
                         </div>
 
@@ -248,10 +221,6 @@ onMounted(() => {
                                 v-model="form.municipality"
                                 placeholder="Select Municipality"
                             />
-                            <InputError
-                                :errors="errors"
-                                errorMessage="municipality"
-                            />
                         </div>
                     </div>
 
@@ -263,10 +232,6 @@ onMounted(() => {
                                 :data="barangay"
                                 v-model="form.barangay"
                                 placeholder="Select Barangay"
-                            />
-                            <InputError
-                                :errors="errors"
-                                errorMessage="barangay"
                             />
                         </div>
 
@@ -282,10 +247,6 @@ onMounted(() => {
                                 id="postal_code"
                                 placeholder="ex.4025"
                                 v-model="form.postal_code"
-                            />
-                            <InputError
-                                :errors="errors"
-                                errorMessage="postal_code"
                             />
                         </div>
                     </div>
@@ -305,12 +266,8 @@ onMounted(() => {
                             type="number"
                             name="contact_no"
                             id="contact_no"
-                            placeholder="Driver Cell Phone Number"
+                            placeholder="enforcer Cell Phone Number"
                             v-model="form.contact_no"
-                        />
-                        <InputError
-                            :errors="errors"
-                            errorMessage="contact_no"
                         />
                     </div>
                 </InputGroup>
@@ -333,10 +290,6 @@ onMounted(() => {
                             <option value="Divorced">Divorced</option>
                             <option value="Widowed">Widowed</option>
                         </StaticSelection>
-                        <InputError
-                            :errors="errors"
-                            errorMessage="civil_status"
-                        />
                     </div>
                 </InputGroup>
             </FormSection>
@@ -352,13 +305,8 @@ onMounted(() => {
 
                         <SelectionWithSearch
                             :data="nationality"
-                            id="nationality"
                             v-model="form.nationality"
                             placeholder="Select Nationality"
-                        />
-                        <InputError
-                            :errors="errors"
-                            errorMessage="nationality"
                         />
                     </div>
                 </InputGroup>
@@ -369,7 +317,7 @@ onMounted(() => {
                 <SectionTitle> Gender </SectionTitle>
                 <InputGroup>
                     <div class="w-1/2 mb-6">
-                        <FormLabel labelfor="Male">Gender:</FormLabel>
+                        <FormLabel labelfor="gender">Gender:</FormLabel>
 
                         <!-- Male Radio Button -->
                         <RadioButton
@@ -384,7 +332,6 @@ onMounted(() => {
                             v-model="form.gender"
                             mb=""
                         />
-                        <InputError :errors="errors" errorMessage="gender" />
                     </div>
                 </InputGroup>
             </FormSection>
@@ -403,69 +350,27 @@ onMounted(() => {
                             type="date"
                             name="contact_no"
                             id="date_of_birth"
-                            placeholder="Driver BitrthDay"
+                            placeholder="enforcer Cell Phone Number"
                             v-model="form.date_of_birth"
                         />
-                        <InputError
-                            :errors="errors"
-                            errorMessage="date_of_birth"
-                        />
                     </div>
                 </InputGroup>
             </FormSection>
 
-            <!-- License Type Selection -->
-
+            <!-- Status Selection -->
             <FormSection>
-                <SectionTitle> License Type </SectionTitle>
+                <SectionTitle> Status </SectionTitle>
                 <InputGroup>
                     <div class="w-1/2 mb-6">
-                        <FormLabel labelfor="lincenseType">
-                            License Type:</FormLabel
-                        >
-
-                        <StaticSelection
-                            id="lincenseType"
-                            v-model="form.license_type"
-                        >
-                            <option value="Student">Student</option>
-                            <option value="Non-Pro">Non-Pro</option>
-                            <option value="Professional">Professional</option>
-                            <option value="No License">No License</option>
+                        <FormLabel labelfor="status">Status:</FormLabel>
+                        <StaticSelection id="status" v-model="form.status">
+                            <option value="Active">Active</option>
+                            <option value="Retired">Retired</option>
                         </StaticSelection>
-                        <InputError
-                            :errors="errors"
-                            errorMessage="license_type"
-                        />
                     </div>
                 </InputGroup>
             </FormSection>
 
-            <!-- License Number Input Field -->
-            <FormSection>
-                <SectionTitle class="basis-1/4 px-5"> License No </SectionTitle>
-                <InputGroup>
-                    <div class="w-1/2 mb-6">
-                        <FormLabel labelfor="license_no">
-                            License No:</FormLabel
-                        >
-
-                        <FormInput
-                            width="full"
-                            type="text"
-                            name="license_no"
-                            id="license_no"
-                            placeholder="Driver License Number"
-                            v-model="form.license_no"
-                            :readonly="!validLicense"
-                        />
-                        <InputError
-                            :errors="errors"
-                            errorMessage="license_no"
-                        />
-                    </div>
-                </InputGroup>
-            </FormSection>
             <hr class="border border-gray-500 dark:border-slate-50" />
             <!-- Form Button -->
             <div class="flex justify-center">
