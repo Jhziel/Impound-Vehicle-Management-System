@@ -16,13 +16,14 @@ defineOptions({
 });
 
 const form = useForm({
-    violationName: "",
-    violationCode: "",
-    violationDescription: "",
+    violation_name: "",
+    violation_code: "",
+    violation_description: "",
+    fine: "",
 });
 
 const submit = () => {
-    router.post("/drivers", form);
+    router.post("/violations", form);
 };
 </script>
 
@@ -48,7 +49,7 @@ const submit = () => {
                             name="violationName"
                             id="violationName"
                             placeholder="Enter the violation Name"
-                            v-model="form.violationName"
+                            v-model="form.violation_name"
                         />
                     </div>
                 </InputGroup>
@@ -68,7 +69,7 @@ const submit = () => {
                             name="violationCode"
                             id="violationCode"
                             placeholder="Enter the violation Code"
-                            v-model="form.violationCode"
+                            v-model="form.violation_code"
                         />
                     </div>
                 </InputGroup>
@@ -83,9 +84,27 @@ const submit = () => {
                             >Violation Descriptions:</FormLabel
                         >
                         <FormTextArea
-                            v-model="form.violationDescription"
+                            v-model="form.violation_description"
                             name="violationDescription"
                             placeholder="Enter a Violation description here..."
+                        />
+                    </div>
+                </InputGroup>
+            </FormSection>
+
+            <!-- Fine Input Field -->
+            <FormSection>
+                <SectionTitle> Fine </SectionTitle>
+                <InputGroup>
+                    <div class="w-1/2 mb-6">
+                        <FormLabel labelfor="fine">Fine:</FormLabel>
+                        <FormInput
+                            width="full"
+                            type="number"
+                            name="fine"
+                            id="fine"
+                            placeholder="Enter the violation fine"
+                            v-model="form.fine"
                         />
                     </div>
                 </InputGroup>

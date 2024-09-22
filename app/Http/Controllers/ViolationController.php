@@ -14,11 +14,12 @@ class ViolationController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::query()->when($request->input('search'), function ($query, $search) {
-            $query->where('name', 'like', "%{$search}%");
+        $violations = Violation::query()->when($request->input('search'), function ($query, $search) {
+            $query->where('violation_name', 'like', "%{$search}%")
+                ->orWhere('violation_code', 'like', "%{$search}%");
         })->paginate(4)->withQueryString();
         return Inertia::render('Violations/Index', [
-            'users' => $users,
+            'violations' => $violations,
             'filters' => $request->only('search'),
         ]);
     }
@@ -36,7 +37,30 @@ class ViolationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = $request->validate([
+                'violation_name' => ['required', 'unique:violations,violation_name'],
+                'violation_code' => ['required', 'unique:violations,violation_code'],
+                'fine' => ['required', 'integer'],
+                'violation_description' => ['required', 'string']
+            ]);
+
+            Violation::create($data);
+
+            return redirect('/violations')->with([
+                'message' =>  'Successfully Created the Violation',
+                'message_type' => 'success'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Handle validation errors
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput() // Keep input data to help the user fix errors
+                ->with([
+                    'message' => 'There were errors with your submission.',
+                    'message_type' => 'error' // This will indicate an error
+                ]);
+        }
     }
 
     /**

@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('violations', function (Blueprint $table) {
             $table->id();
+            $table->string('violation_name');
+            $table->string('violation_code');
+            $table->integer('fine');
+            $table->longText('violation_description');
             $table->timestamps();
         });
     }
