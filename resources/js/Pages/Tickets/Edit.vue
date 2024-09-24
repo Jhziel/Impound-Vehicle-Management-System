@@ -10,9 +10,14 @@ import InputGroup from "@/Components/InputGroup.vue";
 import FormSection from "@/Components/FormSection.vue";
 import FormTextArea from "@/Components/FormTextArea.vue";
 import { router, useForm } from "@inertiajs/vue3";
+import { onMounted } from "vue";
 
 defineOptions({
     layout: BaseLayout,
+});
+
+const props = defineProps({
+    violation: Object,
 });
 
 const form = useForm({
@@ -22,8 +27,15 @@ const form = useForm({
     fine: "",
 });
 
-const submit = () => {
-    router.post("/violations", form);
+onMounted(() => {
+    form.violation_name = props.violation.violation_name;
+    form.violation_code = props.violation.violation_code;
+    form.violation_description = props.violation.violation_description;
+    form.fine = props.violation.fine;
+});
+
+const submit = (id) => {
+    router.put(`/violations/${id}`, form);
 };
 </script>
 
@@ -34,7 +46,7 @@ const submit = () => {
     <FormLayout>
         <PageHeading pageTitle="Create Violation" link="/violations" />
 
-        <form @submit.prevent="submit" class="mt-5 space-y-10">
+        <form @submit.prevent="submit(violation.id)" class="mt-5">
             <!-- Violation Name Input Field -->
             <FormSection>
                 <SectionTitle> Violation Name </SectionTitle>

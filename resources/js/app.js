@@ -28,6 +28,7 @@ import {
     faGavel,
     faCircleCheck,
     faCircleXmark,
+    faFilePen,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -46,7 +47,8 @@ library.add(
     faUserNurse,
     faGavel,
     faCircleCheck,
-    faCircleXmark
+    faCircleXmark,
+    faFilePen
 );
 // Set the components prop default to return our fresh components
 VSelect.props.components.default = () => ({

@@ -106,6 +106,15 @@ defineEmits(["hideSidebar"]);
                 >
                     Violations
                 </SideBarLink>
+
+                <!-- Ticket -->
+                <SideBarLink
+                    link="/tickets"
+                    :icon="['fas', 'file-pen']"
+                    :active="$page.url.startsWith('/tickets')"
+                >
+                    Tickets
+                </SideBarLink>
             </ul>
         </aside>
     </div>

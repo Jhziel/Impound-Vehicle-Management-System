@@ -202,7 +202,7 @@ class EnforcerController extends Controller
                 'nationality' => $value['nationality']
             ];
         });
-        $newArray = Arr::flatten($newArray);
+
         return $newArray;
     }
 
