@@ -62,7 +62,11 @@ watch(
 );
 
 //get province data
-const province = Object.keys(props.locations).sort();
+let province = Object.keys(props.locations).sort();
+
+province = province.map((prov) => {
+    return { province: prov };
+});
 
 //get municipality data
 const municipality = computed(() => {
@@ -70,7 +74,11 @@ const municipality = computed(() => {
 
     const selectedProvince = props.locations[form.province];
 
-    return Object.keys(selectedProvince.municipality_list);
+    return Object.keys(selectedProvince.municipality_list).map(
+        (municipalityKey) => {
+            return { municipality: municipalityKey };
+        }
+    );
 });
 
 //get barangay data
@@ -80,7 +88,9 @@ const barangay = computed(() => {
     const selectedMunicipality =
         props.locations[form.province].municipality_list[form.municipality];
 
-    return selectedMunicipality.barangay_list;
+    return selectedMunicipality.barangay_list.map((barangay) => {
+        return { barangay: barangay };
+    });
 });
 
 //Watch for changes in province
@@ -105,6 +115,7 @@ onMounted(() => {
     form.license_type = "Student";
     form.civil_status = "Single";
 });
+
 </script>
 
 <template>
@@ -157,7 +168,7 @@ onMounted(() => {
                                 errorMessage="last_name"
                             />
                         </div>
-                        <!--Suffix  input field  -->
+                        <!--Middle Name  input field  -->
                         <div class="w-full basis-1/4">
                             <FormLabel labelfor="middle_name_initial"
                                 >M.I</FormLabel
@@ -210,9 +221,12 @@ onMounted(() => {
                             <SelectionWithSearch
                                 id="province"
                                 :data="province"
+                                label="province"
                                 v-model="form.province"
                                 placeholder="Select Province"
+                                :reduce="(option) => option.province"
                             />
+
                             <InputError
                                 :errors="errors"
                                 errorMessage="province"
@@ -226,6 +240,8 @@ onMounted(() => {
                             >
                             <SelectionWithSearch
                                 :data="municipality"
+                                label="municipality"
+                                :reduce="(option) => option.municipality"
                                 v-model="form.municipality"
                                 placeholder="Select Municipality"
                             />
@@ -242,6 +258,8 @@ onMounted(() => {
                             <FormLabel labelfor="barangay">Barangay:</FormLabel>
                             <SelectionWithSearch
                                 :data="barangay"
+                                label="barangay"
+                                :reduce="(option) => option.barangay"
                                 v-model="form.barangay"
                                 placeholder="Select Barangay"
                             />
@@ -335,6 +353,8 @@ onMounted(() => {
                             :data="nationality"
                             id="nationality"
                             v-model="form.nationality"
+                            label="nationality"
+                            :reduce="(option) => option.nationality"
                             placeholder="Select Nationality"
                         />
                         <InputError

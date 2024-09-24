@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Violation extends Model
 {
@@ -15,4 +16,9 @@ class Violation extends Model
         'fine',
         'violation_description'
     ];
+
+    public function tickets(): BelongsToMany
+    {
+        return $this->belongsToMany(Ticket::class);
+    }
 }

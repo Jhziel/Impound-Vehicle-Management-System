@@ -33,6 +33,7 @@ class DriverController extends Controller
         //get all countries
 
         $nationality = $this->getNationality();
+       /*  dd($nationality); */
         $locations = $this->getLocations();
         return Inertia::render('Drivers/Create', [
             'locations' => $locations,
@@ -212,7 +213,7 @@ class DriverController extends Controller
                 'nationality' => $value['nationality']
             ];
         });
-        $newArray = Arr::flatten($newArray);
+        /* $newArray = Arr::flatten($newArray); */
         return $newArray;
     }
 

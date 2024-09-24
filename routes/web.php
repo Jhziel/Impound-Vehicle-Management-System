@@ -5,6 +5,7 @@ use App\Http\Controllers\EnforcerController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViolationController;
 use Illuminate\Foundation\Application;
@@ -36,7 +37,5 @@ Route::resource('/enforcers', EnforcerController::class)/* ->middleware('permiss
 Route::resource('/violations', ViolationController::class)/* ->middleware('permission:Manage Drivers') */;
 /* }); */
 
-Route::post('/test', function () {
-    return redirect()->route('drivers.index')->with('message', 'Success');
-});
+Route::resource('/tickets', TicketController::class);
 require __DIR__ . '/auth.php';
