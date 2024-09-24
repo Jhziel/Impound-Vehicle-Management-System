@@ -12,7 +12,7 @@ const props = defineProps({
     filters: Object,
 });
 
-const deleteViolation = (id) => {
+const deleteTicket = (id) => {
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -76,7 +76,7 @@ const deleteViolation = (id) => {
                     >
                     <button
                         class="font-medium bg-red-600 dark:bg-red-500 text-slate-50 px-4 py-2"
-                        @click="deleteViolation(data.id)"
+                        @click="deleteTicket(data.id)"
                     >
                         Delete
                     </button>
