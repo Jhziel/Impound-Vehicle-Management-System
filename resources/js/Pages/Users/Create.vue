@@ -38,6 +38,7 @@ const filteredPermissions = computed(() => {
 
     return [];
 });
+
 const submit = () => {
     router.post("/users", form);
 };
