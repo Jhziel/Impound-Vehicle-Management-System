@@ -87,7 +87,7 @@ onMounted(() => {
 
 <template>
     <Head>
-        <title>Create-Violation</title>
+        <title>Create-Ticket</title>
     </Head>
     <FormLayout>
         <PageHeading pageTitle="Create Violation" link="/violations" />
