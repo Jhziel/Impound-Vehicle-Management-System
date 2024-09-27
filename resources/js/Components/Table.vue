@@ -20,14 +20,36 @@ watch(
     search,
     throttle(function (value) {
         router.get(
+            // Executes a GET request to the search endpoint using the router.
+            // `${props.search}` dynamically constructs the search URL.
             `/${props.search}`,
             { search: value },
             {
+                /*  Preserves the current state of
+                the page so whenever you type on search it does not reset */
                 preserveState: true,
+
                 replace: true,
             }
         );
     }, 500)
+);
+
+watch(
+    search,
+    throttle((value) => {
+        route.get(
+            // Executes a GET request to the search endpoint using the router.
+            // `${props.search}` dynamically constructs the search URL.
+            `/${props.search}`,
+            { search: value },
+            {
+                /*  Preserves the current state of
+                the page so whenever you type on search it does not reset */
+                preserveState: true,
+            }
+        );
+    })
 );
 </script>
 

@@ -20,7 +20,7 @@ const props = defineProps({
 });
 
 const form = useForm({
-    name: "",
+    role: "",
     permissions: [],
 });
 
@@ -33,7 +33,7 @@ onMounted(() => {
         form.permissions = [...props.rolePermissions];
     }
     if (props.role) {
-        form.name = props.role.name;
+        form.role = props.role.name;
     }
 });
 </script>
@@ -44,14 +44,14 @@ onMounted(() => {
 
         <form @submit.prevent="submit" class="mt-5">
             <div>
-                <FormLabel labelfor="name">Roles</FormLabel>
+                <FormLabel labelfor="role">Roles</FormLabel>
 
                 <FormInput
                     type="text"
-                    name="name"
-                    id="name"
+                    name="role"
+                    id="role"
                     placeholder="New Roles"
-                    v-model="form.name"
+                    v-model="form.role"
                 />
             </div>
 

@@ -10,6 +10,8 @@ class ImpoundSlot extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public function impoundTickets(): HasMany
     {
         return $this->hasMany(ImpoundTicket::class);
