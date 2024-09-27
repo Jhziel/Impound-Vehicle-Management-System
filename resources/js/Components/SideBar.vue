@@ -115,6 +115,15 @@ defineEmits(["hideSidebar"]);
                 >
                     Tickets
                 </SideBarLink>
+
+                <!-- Impoound Ticket -->
+                <SideBarLink
+                    link="/impound-tickets"
+                    :icon="['fas', 'car-side']"
+                    :active="$page.url.startsWith('/impound-tickets')"
+                >
+                    Impound Tickets
+                </SideBarLink>
             </ul>
         </aside>
     </div>

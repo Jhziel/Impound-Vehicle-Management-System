@@ -17,7 +17,21 @@ class ImpoundSlotFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'slot_code' => $this->generateUniqueSlotCode(),
+            'is_occupied' => fake()->randomElement([False, True])
         ];
+    }
+    /*  private function generateSlotCode(): string
+    {
+        $side = fake()->randomElement(['L', 'R', 'T']);
+        $number = fake()->unique()->numberBetween(1, 12);
+
+        return "{$side}{$number}";
+    } */
+
+    private function generateUniqueSlotCode(): string
+    {
+        // Ensure the whole combination is unique
+        return fake()->unique()->regexify('[LRT]{1}(1[0-2]|[1-9])');
     }
 }

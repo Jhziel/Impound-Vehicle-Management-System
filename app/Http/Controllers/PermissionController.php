@@ -15,7 +15,8 @@ class PermissionController extends Controller
 
         $permissions = Permission::query()->when($request->input('search'), function ($query, $search) {
             $query->where('name', 'like', "%{$search}%");
-        })->paginate(4)
+        })
+            ->paginate(4)
             ->withQueryString();
         return Inertia::render('Role-Permission/Permissions/Index', [
             'permissions' => $permissions,
@@ -36,15 +37,30 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'unique:permissions,name']
-        ]);
+        try {
 
-        Permission::create([
-            'name' => $request->name
-        ]);
+            $request->validate([
+                'permission' => ['required', 'string', 'unique:permissions,name']
+            ]);
 
-        return redirect('/permissions');
+            Permission::create([
+                'name' => $request->permission
+            ]);
+
+            return redirect('/permissions')->with([
+                'message' => 'Successfully Created Permission',
+                'message_type' => 'success'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()
+                ->back()
+                ->withErrors($e->errors())
+                ->withInput()
+                ->with([
+                    'message' => 'There were errors with your submission.',
+                    'message_type' => 'error'
+                ]);
+        }
     }
 
 

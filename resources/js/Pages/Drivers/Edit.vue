@@ -63,15 +63,22 @@ watch(
 );
 
 //get province data
-const province = Object.keys(props.locations).sort();
+let province = Object.keys(props.locations).sort();
 
+province = province.map((prov) => {
+    return { province: prov };
+});
 //get municipality data
 const municipality = computed(() => {
     if (!form.province) return [];
 
     const selectedProvince = props.locations[form.province];
 
-    return Object.keys(selectedProvince.municipality_list);
+    return Object.keys(selectedProvince.municipality_list).map(
+        (municipalityKey) => {
+            return { municipality: municipalityKey };
+        }
+    );
 });
 
 //get barangay data
@@ -81,27 +88,12 @@ const barangay = computed(() => {
     const selectedMunicipality =
         props.locations[form.province].municipality_list[form.municipality];
 
-    return selectedMunicipality.barangay_list;
+    return selectedMunicipality.barangay_list.map((barangay) => {
+        return { barangay: barangay };
+    });
 });
 
 //Watch for changes in province
-watch(
-    () => form.province,
-    () => {
-        if (initialize.value) {
-            form.municipality = ""; // Reset municipality when province changes
-        }
-    }
-);
-//Watch for changes in municipality
-watch(
-    () => form.municipality,
-    () => {
-        if (initialize.value) {
-            form.barangay = ""; // Reset municipality when province changes
-        }
-    }
-);
 
 const submit = (id) => {
     router.put(`/drivers/${id}`, form);
@@ -122,8 +114,21 @@ onMounted(() => {
     form.gender = props.driver.gender;
     form.date_of_birth = props.driver.date_of_birth;
     form.license_no = props.driver.license_no;
-    initialize.value = true;
 });
+
+watch(
+    () => form.province,
+    () => {
+        form.municipality = ""; // Reset municipality when province changes
+    }
+);
+//Watch for changes in municipality
+watch(
+    () => form.municipality,
+    () => {
+        form.barangay = ""; // Reset municipality when province changes
+    }
+);
 </script>
 
 <template>
@@ -221,7 +226,7 @@ onMounted(() => {
                             errorMessage="street_address"
                         />
                     </div>
-
+                    {{ form.province }}
                     <div class="flex gap-2 mb-6">
                         <!-- Province Selection -->
                         <div class="flex flex-col w-full">
@@ -229,15 +234,17 @@ onMounted(() => {
                             <SelectionWithSearch
                                 id="province"
                                 :data="province"
+                                label="province"
                                 v-model="form.province"
                                 placeholder="Select Province"
+                                :reduce="(option) => option.province"
                             />
                             <InputError
                                 :errors="errors"
                                 errorMessage="province"
                             />
                         </div>
-
+                        {{ form.municipality }}
                         <!-- Municipality Selection -->
                         <div class="flex flex-col w-full">
                             <FormLabel labelfor="municipality"
@@ -245,6 +252,8 @@ onMounted(() => {
                             >
                             <SelectionWithSearch
                                 :data="municipality"
+                                label="municipality"
+                                :reduce="(option) => option.municipality"
                                 v-model="form.municipality"
                                 placeholder="Select Municipality"
                             />
@@ -254,13 +263,15 @@ onMounted(() => {
                             />
                         </div>
                     </div>
-
+                    {{ form.barangay }}
                     <div class="flex gap-2">
                         <!-- Barangay Selection -->
                         <div class="flex flex-col w-full">
                             <FormLabel labelfor="barangay">Barangay:</FormLabel>
                             <SelectionWithSearch
                                 :data="barangay"
+                                label="barangay"
+                                :reduce="(option) => option.barangay"
                                 v-model="form.barangay"
                                 placeholder="Select Barangay"
                             />
@@ -354,6 +365,8 @@ onMounted(() => {
                             :data="nationality"
                             id="nationality"
                             v-model="form.nationality"
+                            label="nationality"
+                            :reduce="(option) => option.nationality"
                             placeholder="Select Nationality"
                         />
                         <InputError

@@ -12,7 +12,11 @@ class ImpoundSlotController extends Controller
      */
     public function index()
     {
-        //
+        $slots = ImpoundSlot::orderByRaw('LEFT(slot_code, 1)')  // Sort by the side (L, R, T)
+        ->orderByRaw('SUBSTRING(slot_code, 2) * 1')         // Sort by the numeric part
+        ->get();
+
+        dd($slots);
     }
 
     /**

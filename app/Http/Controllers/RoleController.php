@@ -11,7 +11,7 @@ class RoleController extends Controller
 {
     public function index(Request $request)
     {
-        
+
         $roles = Role::query()->when($request->input('search'), function ($query, $search) {
             $query->where('name', 'like', "%{$search}%");
         })->paginate(4)
@@ -36,18 +36,32 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'unique:permissions,name'],
-            'permissions' => ['required', 'array', 'min:1'],
-        ]);
+        try {
+            $request->validate([
+                'role' => ['required', 'string', 'unique:permissions,name'],
+                'permissions' => ['required', 'array', 'min:1'],
+            ]);
 
-        $role = Role::create([
-            'name' => $request->name
-        ]);
+            $role = Role::create([
+                'name' => $request->role
+            ]);
 
-        $role->givePermissionTo($request->permissions);
+            $role->givePermissionTo($request->permissions);
 
-        return redirect('/roles');
+            return redirect('/roles')->with([
+                'message' => 'Successfully Created Role',
+                'message_type' => 'success'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()
+                ->back()
+                ->withErrors($e->errors())
+                ->withInput()
+                ->with([
+                    'message' => 'There were error in your submission',
+                    'message_type' => 'error'
+                ]);
+        }
     }
 
 
@@ -71,11 +85,11 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         $request->validate([
-            'name' => ['required', 'string', 'unique:permissions,name'],
+            'role' => ['required', 'string', 'unique:permissions,name'],
             'permissions' => ['required']
         ]);
 
-        $role->update(['name' => $request->name]);
+        $role->update(['name' => $request->role]);
         $role->syncPermissions($request->permissions);
 
         return redirect('/roles');

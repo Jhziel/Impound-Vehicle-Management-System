@@ -115,7 +115,6 @@ onMounted(() => {
     form.license_type = "Student";
     form.civil_status = "Single";
 });
-
 </script>
 
 <template>
@@ -130,7 +129,7 @@ onMounted(() => {
             <FormSection>
                 <SectionTitle> Name </SectionTitle>
                 <InputGroup>
-                    <div class="flex gap-2 mb-2">
+                    <div class="md:flex gap-2 mb-2">
                         <!--First Name input field  -->
                         <div class="w-full">
                             <FormLabel labelfor="first_name"
@@ -192,7 +191,7 @@ onMounted(() => {
             </FormSection>
 
             <!-- Address Information -->
-            <FormSection class="flex items-center mb-10">
+            <FormSection>
                 <SectionTitle> Address </SectionTitle>
                 <InputGroup>
                     <!--Street Address input field  -->
@@ -214,7 +213,7 @@ onMounted(() => {
                         />
                     </div>
 
-                    <div class="flex gap-2 mb-6">
+                    <div class="md:flex gap-2 mb-6">
                         <!-- Province Selection -->
                         <div class="flex flex-col w-full">
                             <FormLabel labelfor="province">Province:</FormLabel>
@@ -252,7 +251,7 @@ onMounted(() => {
                         </div>
                     </div>
 
-                    <div class="flex gap-2">
+                    <div class="md:flex gap-2">
                         <!-- Barangay Selection -->
                         <div class="flex flex-col w-full">
                             <FormLabel labelfor="barangay">Barangay:</FormLabel>
@@ -295,7 +294,7 @@ onMounted(() => {
             <FormSection>
                 <SectionTitle> Cell Phone No. </SectionTitle>
                 <InputGroup>
-                    <div class="w-1/2 mb-6">
+                    <div class="md:w-1/2 w-full mb-6">
                         <FormLabel labelfor="contact_no"
                             >Cell Phone#:</FormLabel
                         >
@@ -319,7 +318,7 @@ onMounted(() => {
             <FormSection>
                 <SectionTitle> Civil Status </SectionTitle>
                 <InputGroup>
-                    <div class="w-1/2 mb-6">
+                    <div class="md:w-1/2 w-full mb-6">
                         <FormLabel labelfor="civil_status"
                             >Civil Status:</FormLabel
                         >
@@ -341,10 +340,10 @@ onMounted(() => {
             </FormSection>
 
             <!-- Nationality Selection -->
-            <FormSection class="flex items-center mb-10">
+            <FormSection>
                 <SectionTitle> Nationality </SectionTitle>
                 <InputGroup>
-                    <div class="w-1/2 mb-6">
+                    <div class="md:w-1/2 w-full mb-6">
                         <FormLabel labelfor="nationality"
                             >Nationality:</FormLabel
                         >
@@ -366,10 +365,10 @@ onMounted(() => {
             </FormSection>
 
             <!-- Gender Selection -->
-            <FormSection class="flex items-center mb-10">
+            <FormSection>
                 <SectionTitle> Gender </SectionTitle>
                 <InputGroup>
-                    <div class="w-1/2 mb-6">
+                    <div class="md:w-1/2 w-full mb-6">
                         <FormLabel labelfor="Male">Gender:</FormLabel>
 
                         <!-- Male Radio Button -->
@@ -394,7 +393,7 @@ onMounted(() => {
             <FormSection>
                 <SectionTitle> Date of Birth </SectionTitle>
                 <InputGroup>
-                    <div class="w-1/2 mb-6">
+                    <div class="md:w-1/2 w-full mb-6">
                         <FormLabel labelfor="date_of_birth">
                             Date of Birth:</FormLabel
                         >
@@ -420,7 +419,7 @@ onMounted(() => {
             <FormSection>
                 <SectionTitle> License Type </SectionTitle>
                 <InputGroup>
-                    <div class="w-1/2 mb-6">
+                    <div class="md:w-1/2 w-full mb-6">
                         <FormLabel labelfor="lincenseType">
                             License Type:</FormLabel
                         >
@@ -444,9 +443,9 @@ onMounted(() => {
 
             <!-- License Number Input Field -->
             <FormSection>
-                <SectionTitle class="basis-1/4 px-5"> License No </SectionTitle>
+                <SectionTitle> License No </SectionTitle>
                 <InputGroup>
-                    <div class="w-1/2 mb-6">
+                    <div class="md:w-1/2 w-full mb-6">
                         <FormLabel labelfor="license_no">
                             License No:</FormLabel
                         >

@@ -15,12 +15,13 @@ class DriverController extends Controller
     public function index(Request $request)
     {
         $drivers = Driver::query()->when($request->input('search'), function ($query, $search) {
-            $query->where('first_name', 'like', "%{$search}%")
-                ->orWhere('last_name', 'like', "%{$search}%")
-                ->orWhere('license_no', 'like', "%{$search}%");
-        })->paginate(4)->withQueryString();
+            $this->applySearchFilters($query, $search);
+        })->paginate(4)
+            // Preserve the query string parameters in pagination links 
+            ->withQueryString();
         return Inertia::render('Drivers/Index', [
             'drivers' => $drivers,
+            //get the search on url if there is any
             'filters' => $request->only('search'),
         ]);
     }
@@ -30,10 +31,8 @@ class DriverController extends Controller
      */
     public function create()
     {
-        //get all countries
 
         $nationality = $this->getNationality();
-       /*  dd($nationality); */
         $locations = $this->getLocations();
         return Inertia::render('Drivers/Create', [
             'locations' => $locations,
@@ -226,5 +225,20 @@ class DriverController extends Controller
         $data = json_decode(file_get_contents($jsonFile), true);
 
         return $data;
+    }
+
+    private function applySearchFilters($query, $search)
+    {
+        // Split the search term into words
+        $searchTerms = explode(' ', $search);
+
+        return $query->where(function ($q) use ($searchTerms) {
+            foreach ($searchTerms as $term) {
+                $q->where(function ($subQuery) use ($term) {
+                    $subQuery->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$term}%"])
+                        ->orWhere('license_no', 'like', "%{$term}%");
+                });
+            }
+        });
     }
 }

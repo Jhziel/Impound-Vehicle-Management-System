@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('slot_code')->unique();
             $table->boolean('is_occupied')->default(false);
-            $table->timestamps();
         });
     }
 
