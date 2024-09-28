@@ -32,9 +32,9 @@ const form = useForm({
     last_name: "",
     middle_name_initial: "",
     street_address: "",
-    province: "",
-    municipality: "",
-    barangay: "",
+    province: props.driver.province,
+    municipality: props.driver.municipality,
+    barangay: props.driver.barangay,
     postal_code: "",
     contact_no: "",
     nationality: "",
@@ -47,7 +47,6 @@ const form = useForm({
 
 // License validation state
 const validLicense = ref(false);
-const initialize = ref(false);
 
 // Watch for changes in license_type
 watch(
@@ -105,9 +104,6 @@ onMounted(() => {
     form.last_name = props.driver.last_name;
     form.middle_name_initial = props.driver.middle_name_initial;
     form.street_address = props.driver.street_address;
-    form.province = props.driver.province;
-    form.municipality = props.driver.municipality;
-    form.barangay = props.driver.barangay;
     form.postal_code = props.driver.postal_code;
     form.contact_no = props.driver.contact_no;
     form.nationality = props.driver.nationality;

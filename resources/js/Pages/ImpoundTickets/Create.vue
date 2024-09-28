@@ -59,7 +59,7 @@ const enforcersWithFullName = computed(() => {
 });
 
 const submit = () => {
-    router.post("/tickets", form);
+    router.post("/impound-tickets", form);
 };
 
 //Get the current Time and Date
@@ -96,9 +96,9 @@ const highLight = (event) => {
     }
     // Set the DOM element to the ref's value
     data.value = event.target;
-
+    const numericValue = parseInt(data.value.getAttribute("value"), 10);
     // Add the "highlight" class to the element
-    form.slot = data.value.textContent;
+    form.slot = numericValue;
 
     console.log(data.value); // Log the DOM element
 };
@@ -444,7 +444,7 @@ onMounted(() => {
                     "
                     class="border flex justify-center items-center cursor-pointer"
                     @click="highLight"
-                    :value="slot.slot_code"
+                    :value="slot.id"
                 >
                     {{ slot.slot_code }}
                 </div>
@@ -463,7 +463,7 @@ onMounted(() => {
                         "
                         class="border h-20 flex justify-center items-center cursor-pointer"
                         @click="highLight"
-                        :value="slot.slot_code"
+                        :value="slot.id"
                     >
                         {{ slot.slot_code }}
                     </div>
@@ -480,7 +480,7 @@ onMounted(() => {
                         "
                         class="border h-20 flex justify-center items-center cursor-pointer"
                         @click="highLight"
-                        :value="slot.slot_code"
+                        :value="slot.id"
                     >
                         {{ slot.slot_code }}
                     </div>

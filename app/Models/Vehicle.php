@@ -10,6 +10,15 @@ class Vehicle extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'plate_no',
+        'vehicle_type',
+        'driver_id',
+        'ownership_type',
+        'is_impounded',
+        'impound_date'
+    ];
+
     public function impoundTickets(): HasMany
     {
         return $this->hasMany(ImpoundTicket::class);
