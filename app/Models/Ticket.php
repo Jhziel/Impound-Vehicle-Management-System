@@ -35,4 +35,9 @@ class Ticket extends Model
     {
         return $this->belongsToMany(Violation::class);
     }
+
+    public function impound_ticket(): BelongsTo
+    {
+        return $this->belongsTo(ImpoundTicket::class);
+    }
 }

@@ -78,6 +78,22 @@ class ImpoundTicketController extends Controller
             'slot' => ['required']
         ]);
 
+        // Validate the vehicle (checks if it exists and is not impounded)
+        $vehicle = $this->validateVehicle($request);
+
+        if ($vehicle instanceof \Illuminate\Http\RedirectResponse) {
+            return $vehicle;  // Return the error if validation failed
+        }
+
+
+        $created_vehicle = Vehicle::create([
+            'plate_no' => $request->plate_no,
+            'vehicle_type' => $request->vehicle_type,
+            'ownership_type' => $request->ownership_type,
+            'driver_id' => $request->driver_id,
+            'is_impounded' => True,
+            'impound_date' => $request->date_of_incident
+        ]);
         $ticket = Ticket::create([
             'ticket_no' => $request->ticket_no,
             'driver_id' => $request->driver_id,
@@ -86,15 +102,21 @@ class ImpoundTicketController extends Controller
             'location_of_incident' => $request->location_of_incident,
             'date_of_incident' => $request->date_of_incident,
         ]);
+        $impoundTicket = ImpoundTicket::create([
+            'driver_id' => $request->driver_id,
+            'enforcer_id' => $request->enforcer_id,
+            'vehicle_id' => $created_vehicle->id,
+            'ticket_id' => $ticket->id,
+            'impound_slot_id' => $request->slot
+        ]);
 
         $ticket->violations()->sync($request->violations);
 
-        Vehicle::create([
-            'plate_no' => $request->plate_no,
-            'vehicle_type' => $request->vehicle_type,
-            'ownership_type' => $request->ownership_type,
-            'is_impounded' => True,
-            'impound_date' => $request->date_of_incident
+
+
+        return redirect('/impound-tickets')->with([
+            'message' => 'Successfully Created the Impound Ticket',
+            'message_type' => 'success' // This will indicate a success
         ]);
     }
 
@@ -137,5 +159,40 @@ class ImpoundTicketController extends Controller
             ->select($columns)
             ->orderBy($orderBy[0], $orderBy[1])
             ->get();
+    }
+
+    private function validateVehicle(Request $request)
+    {
+        // Fetch the vehicle with matching details
+        $vehicle = true;
+
+        $isPlateNoExist = Vehicle::where('plate_no', $request->plate_no)->exists();
+        if ($isPlateNoExist) {
+            $vehicle = Vehicle::where('plate_no', $request->plate_no)
+                ->where('vehicle_type', $request->vehicle_type)
+                ->where('ownership_type', $request->ownership_type)
+                ->first();
+
+            // Check if the vehicle is impounded (indicating a pending ticket)
+            if ($vehicle->is_impounded) {
+                return redirect()->back()->withInput()->with([
+                    'message' => 'This vehicle has a pending ticket as it is impounded. No new tickets can be created.',
+                    'message_type' => 'error'
+                ]);
+            }
+        }
+
+        // Check if the vehicle exists
+        if (!$vehicle) {
+            return redirect()->back()->withInput()->with([
+                'message' => 'Vehicle are already in the database but theres a mismatch',
+                'message_type' => 'error'
+            ]);
+        }
+
+
+
+        // If validation passes, return the vehicle
+        return $vehicle;
     }
 }

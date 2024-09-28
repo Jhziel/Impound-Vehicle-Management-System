@@ -17,10 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(App\Models\Enforcer::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(App\Models\Vehicle::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(App\Models\ImpoundSlot::class)->constrained()->cascadeOnDelete();
-            $table->string('ticket_no');
-            $table->string('location_of_incident');
-            $table->string('status');
-            $table->dateTimeTz('date_of_incident');
+            $table->foreignIdFor(App\Models\Ticket::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
