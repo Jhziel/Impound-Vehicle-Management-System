@@ -10,6 +10,7 @@ use App\Models\Ticket;
 use App\Models\Vehicle;
 use App\Models\Violation;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class ImpoundTicketController extends Controller
@@ -72,10 +73,13 @@ class ImpoundTicketController extends Controller
             'driver_id' => ['required'],
             'enforcer_id' => ['required'],
             'violations' => ['required'],
-            'plate_no' => ['required', 'unique:vehicles,plate_no'],
+            'plate_no' => ['required'],
             'vehicle_type' => ['required'],
             'ownership_type' => ['required'],
             'slot' => ['required']
+        ], [
+            'violations.required' => 'Select atleast one violations',
+
         ]);
 
         // Validate the vehicle (checks if it exists and is not impounded)
@@ -163,17 +167,12 @@ class ImpoundTicketController extends Controller
 
     private function validateVehicle(Request $request)
     {
-        // Fetch the vehicle with matching details
-        $vehicle = true;
 
-        $isPlateNoExist = Vehicle::where('plate_no', $request->plate_no)->exists();
-        if ($isPlateNoExist) {
-            $vehicle = Vehicle::where('plate_no', $request->plate_no)
-                ->where('vehicle_type', $request->vehicle_type)
-                ->where('ownership_type', $request->ownership_type)
-                ->first();
+        // Get all vehicles with the same plate_no
+        $vehicles = Vehicle::where('plate_no', $request->plate_no)->get();
 
-            // Check if the vehicle is impounded (indicating a pending ticket)
+        // Check if any vehicle is impounded
+        foreach ($vehicles as $vehicle) {
             if ($vehicle->is_impounded) {
                 return redirect()->back()->withInput()->with([
                     'message' => 'This vehicle has a pending ticket as it is impounded. No new tickets can be created.',
@@ -182,17 +181,47 @@ class ImpoundTicketController extends Controller
             }
         }
 
-        // Check if the vehicle exists
-        if (!$vehicle) {
-            return redirect()->back()->withInput()->with([
-                'message' => 'Vehicle are already in the database but theres a mismatch',
-                'message_type' => 'error'
-            ]);
+
+        $isPlateNoExist = Vehicle::where('plate_no', $request->plate_no)->exists();
+        if ($isPlateNoExist) {
+            $vehicle = Vehicle::where('plate_no', $request->plate_no)
+                ->where('vehicle_type', $request->vehicle_type)
+                ->where('ownership_type', $request->ownership_type)
+                ->where('driver_id', $request->ownership_type)
+                ->first();
+
+            // Check if the vehicle exists
+            if (!$vehicle) {
+                $errors = [];
+
+                // Check for ownership type mismatch
+                $registeredOwnershipType = Vehicle::where('plate_no', $request->plate_no)->value('ownership_type');
+                if ($registeredOwnershipType !== $request->ownership_type) {
+                    $errors['ownership_type'] = 'The ownership type provided does not match the registered ownership for this plate number.';
+                }
+
+                // Check for vehicle type mismatch
+                $registeredVehicleType = Vehicle::where('plate_no', $request->plate_no)->value('vehicle_type');
+                if ($registeredVehicleType !== $request->vehicle_type) {
+                    $errors['vehicle_type'] = 'The vehicle type provided does not match the registered type for this plate number.';
+                }
+
+                // Check for driver  mismatch
+                $registeredDriver = Vehicle::where('plate_no', $request->plate_no)->value('driver_id');
+                if ($registeredDriver !== $request->driver_id) {
+                    $errors['driver_id'] = 'The driver provided does not match the registered driver for this plate number.';
+                    $errors['plate_no'] = 'This vehicle does not belong to the specified driver.';
+                }
+
+                // If there are errors, redirect back with them
+                if (!empty($errors)) {
+
+                    return redirect()->back()->withErrors($errors)->withInput()->with([
+                        'message' => 'Vehicle are already in the database but theres a mismatch',
+                        'message_type' => 'error',
+                    ]);
+                }
+            }
         }
-
-
-
-        // If validation passes, return the vehicle
-        return $vehicle;
     }
 }

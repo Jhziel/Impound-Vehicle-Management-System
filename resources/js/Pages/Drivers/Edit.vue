@@ -222,7 +222,7 @@ watch(
                             errorMessage="street_address"
                         />
                     </div>
-                    {{ form.province }}
+
                     <div class="flex gap-2 mb-6">
                         <!-- Province Selection -->
                         <div class="flex flex-col w-full">
@@ -240,7 +240,7 @@ watch(
                                 errorMessage="province"
                             />
                         </div>
-                        {{ form.municipality }}
+
                         <!-- Municipality Selection -->
                         <div class="flex flex-col w-full">
                             <FormLabel labelfor="municipality"
@@ -259,7 +259,7 @@ watch(
                             />
                         </div>
                     </div>
-                    {{ form.barangay }}
+
                     <div class="flex gap-2">
                         <!-- Barangay Selection -->
                         <div class="flex flex-col w-full">
