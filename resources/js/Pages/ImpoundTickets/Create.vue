@@ -88,19 +88,10 @@ function getTotalFine() {
     return totalFine;
 }
 
-const data = ref(null); // Initialize as `null` to hold a DOM element later
-const truthy = ref(false);
-
-const highLight = (event) => {
-    if (data.value) {
+const selectSlot = (slot) => {
+    if (!slot.is_occupied) {
+        form.slot = slot.id;
     }
-    // Set the DOM element to the ref's value
-    data.value = event.target;
-    const numericValue = parseInt(data.value.getAttribute("value"), 10);
-    // Add the "highlight" class to the element
-    form.slot = numericValue;
-
-    console.log(data.value); // Log the DOM element
 };
 
 onMounted(() => {
@@ -342,7 +333,6 @@ onMounted(() => {
                             :errors="errors"
                             errorMessage="violations"
                         />
-                        
                     </div>
 
                     <div
@@ -410,7 +400,6 @@ onMounted(() => {
                     </div>
                 </InputGroup>
             </FormSection>
-            {{ form.slot }}
 
             <!-- Impound Area -->
             <hr class="border border-gray-500 dark:border-slate-50" />
@@ -438,14 +427,15 @@ onMounted(() => {
                 <div
                     v-for="(slot, index) in slotTop"
                     :key="index"
-                    :class="
+                    :class="[
                         slot.is_occupied
-                            ? 'bg-red-500'
-                            : 'bg-green-500 hover:bg-yellow-400'
-                    "
+                            ? 'bg-red-500' // If occupied, make it red
+                            : form.slot === slot.id // Compare selected slot ID
+                            ? 'bg-yellow-500' // If selected, make it yellow
+                            : 'bg-green-500 hover:bg-yellow-400', // Default green with hover effect
+                    ]"
                     class="border flex justify-center items-center cursor-pointer"
-                    @click="highLight"
-                    :value="slot.id"
+                    @click="selectSlot(slot)"
                 >
                     {{ slot.slot_code }}
                 </div>
@@ -454,17 +444,15 @@ onMounted(() => {
                     <div
                         v-for="(slot, index) in slotLeft"
                         :key="index"
-                        :class="
-                            (slot.is_occupied
-                                ? 'bg-red-500'
-                                : 'bg-green-500 hover:bg-yellow-400',
-                            truthy
-                                ? 'bg-yellow-500'
-                                : 'bg-green-500 hover:bg-yellow-400')
-                        "
+                        :class="[
+                            slot.is_occupied
+                                ? 'bg-red-500' // If occupied, make it red
+                                : form.slot === slot.id // Compare selected slot ID
+                                ? 'bg-yellow-500' // If selected, make it yellow
+                                : 'bg-green-500 hover:bg-yellow-400', // Default green with hover effect
+                        ]"
                         class="border h-20 flex justify-center items-center cursor-pointer"
-                        @click="highLight"
-                        :value="slot.id"
+                        @click="selectSlot(slot)"
                     >
                         {{ slot.slot_code }}
                     </div>
@@ -474,19 +462,21 @@ onMounted(() => {
                     <div
                         v-for="(slot, index) in slotRight"
                         :key="index"
-                        :class="
+                        :class="[
                             slot.is_occupied
-                                ? 'bg-red-500'
-                                : 'bg-green-500 hover:bg-yellow-400'
-                        "
+                                ? 'bg-red-500' // If occupied, make it red
+                                : form.slot === slot.id // Compare selected slot ID
+                                ? 'bg-yellow-500' // If selected, make it yellow
+                                : 'bg-green-500 hover:bg-yellow-400', // Default green with hover effect
+                        ]"
                         class="border h-20 flex justify-center items-center cursor-pointer"
-                        @click="highLight"
-                        :value="slot.id"
+                        @click="selectSlot(slot)"
                     >
                         {{ slot.slot_code }}
                     </div>
                 </div>
             </div>
+            <!-- Impound Area  End-->
 
             <hr class="border border-gray-500 dark:border-slate-50" />
             <!-- Form Button -->

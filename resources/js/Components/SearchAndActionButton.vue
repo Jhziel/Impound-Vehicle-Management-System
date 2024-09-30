@@ -9,7 +9,7 @@ defineProps({
 <template>
     <section>
         <div
-            class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-slate-800 py-5 px-5 mb-5 rounded-md"
+            class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-slate-800 py-5 px-5 mb-5 rounded-md border-2 border-indigo-600"
         >
             <label for="table-search" class="sr-only">Search</label>
             <div class="relative">

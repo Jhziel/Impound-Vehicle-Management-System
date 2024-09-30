@@ -46,9 +46,9 @@ defineEmits(["hideSidebar"]);
 
                 <!-- Impounding Area -->
                 <SideBarLink
-                    link="/impound_area"
+                    link="/impound-area"
                     :icon="['fas', 'map-location-dot']"
-                    :active="$page.url.startsWith('/impound_area')"
+                    :active="$page.url.startsWith('/impound-area')"
                 >
                     Impound Area
                 </SideBarLink>

@@ -31,9 +31,9 @@ const form = useForm({
     last_name: "",
     middle_name_initial: "",
     street_address: "",
-    province: "",
-    municipality: "",
-    barangay: "",
+    province: props.enforcer.province,
+    municipality: props.enforcer.municipality,
+    barangay: props.enforcer.barangay,
     postal_code: "",
     contact_no: "",
     nationality: "",
@@ -45,15 +45,22 @@ const form = useForm({
 });
 
 //get province data
-const province = Object.keys(props.locations).sort();
+let province = Object.keys(props.locations).sort();
 
+province = province.map((prov) => {
+    return { province: prov };
+});
 //get municipality data
 const municipality = computed(() => {
     if (!form.province) return [];
 
     const selectedProvince = props.locations[form.province];
 
-    return Object.keys(selectedProvince.municipality_list);
+    return Object.keys(selectedProvince.municipality_list).map(
+        (municipalityKey) => {
+            return { municipality: municipalityKey };
+        }
+    );
 });
 
 //get barangay data
@@ -63,7 +70,9 @@ const barangay = computed(() => {
     const selectedMunicipality =
         props.locations[form.province].municipality_list[form.municipality];
 
-    return selectedMunicipality.barangay_list;
+    return selectedMunicipality.barangay_list.map((barangay) => {
+        return { barangay: barangay };
+    });
 });
 
 //Watch for changes in province
@@ -91,9 +100,6 @@ onMounted(() => {
     form.last_name = props.enforcer.last_name;
     form.middle_name_initial = props.enforcer.middle_name_initial;
     form.street_address = props.enforcer.street_address;
-    form.province = props.enforcer.province;
-    form.municipality = props.enforcer.municipality;
-    form.barangay = props.enforcer.barangay;
     form.postal_code = props.enforcer.postal_code;
     form.contact_no = props.enforcer.contact_no;
     form.nationality = props.enforcer.nationality;
@@ -233,9 +239,12 @@ onMounted(() => {
                         <div class="flex flex-col w-full">
                             <FormLabel labelfor="province">Province:</FormLabel>
                             <SelectionWithSearch
+                                id="province"
                                 :data="province"
+                                label="province"
                                 v-model="form.province"
                                 placeholder="Select Province"
+                                :reduce="(option) => option.province"
                             />
 
                             <!-- Province Error -->
@@ -252,6 +261,8 @@ onMounted(() => {
                             >
                             <SelectionWithSearch
                                 :data="municipality"
+                                label="municipality"
+                                :reduce="(option) => option.municipality"
                                 v-model="form.municipality"
                                 placeholder="Select Municipality"
                             />
@@ -270,6 +281,8 @@ onMounted(() => {
                             <FormLabel labelfor="barangay">Barangay:</FormLabel>
                             <SelectionWithSearch
                                 :data="barangay"
+                                label="barangay"
+                                :reduce="(option) => option.barangay"
                                 v-model="form.barangay"
                                 placeholder="Select Barangay"
                             />
@@ -369,7 +382,10 @@ onMounted(() => {
 
                         <SelectionWithSearch
                             :data="nationality"
+                            id="nationality"
                             v-model="form.nationality"
+                            label="nationality"
+                            :reduce="(option) => option.nationality"
                             placeholder="Select Nationality"
                         />
                     </div>
