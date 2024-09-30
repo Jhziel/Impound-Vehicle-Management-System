@@ -76,11 +76,12 @@ class ImpoundTicketController extends Controller
             'plate_no' => ['required'],
             'vehicle_type' => ['required'],
             'ownership_type' => ['required'],
-            'slot' => ['required']
+            'slot' => ['required', 'exists:slots,id']
         ], [
             'violations.required' => 'Select atleast one violations',
 
         ]);
+
 
         // Validate the vehicle (checks if it exists and is not impounded)
         $vehicle = $this->validateVehicle($request);
@@ -88,6 +89,9 @@ class ImpoundTicketController extends Controller
         if ($vehicle instanceof \Illuminate\Http\RedirectResponse) {
             return $vehicle;  // Return the error if validation failed
         }
+
+
+        $this->markSlotAsOccupied($request->slot);
 
 
         $created_vehicle = Vehicle::create([
@@ -106,7 +110,7 @@ class ImpoundTicketController extends Controller
             'location_of_incident' => $request->location_of_incident,
             'date_of_incident' => $request->date_of_incident,
         ]);
-        $impoundTicket = ImpoundTicket::create([
+        ImpoundTicket::create([
             'driver_id' => $request->driver_id,
             'enforcer_id' => $request->enforcer_id,
             'vehicle_id' => $created_vehicle->id,
@@ -115,8 +119,6 @@ class ImpoundTicketController extends Controller
         ]);
 
         $ticket->violations()->sync($request->violations);
-
-
 
         return redirect('/impound-tickets')->with([
             'message' => 'Successfully Created the Impound Ticket',
@@ -222,6 +224,17 @@ class ImpoundTicketController extends Controller
                     ]);
                 }
             }
+        }
+    }
+
+
+    private function markSlotAsOccupied($slotId)
+    {
+        $slot = ImpoundSlot::find($slotId); // Retrieve the slot by ID
+
+        if ($slot) {
+            $slot->is_occupied = true; // Mark the slot as occupied
+            $slot->save(); // Save the changes to the database
         }
     }
 }

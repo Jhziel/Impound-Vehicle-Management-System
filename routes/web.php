@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\EnforcerController;
+use App\Http\Controllers\ImpoundAreaController;
 use App\Http\Controllers\ImpoundTicketController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
@@ -40,4 +41,5 @@ Route::resource('/violations', ViolationController::class)/* ->middleware('permi
 
 Route::resource('/tickets', TicketController::class);
 Route::resource('/impound-tickets', ImpoundTicketController::class);
+Route::resource('/impound-area', ImpoundAreaController::class);
 require __DIR__ . '/auth.php';
