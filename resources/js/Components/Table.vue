@@ -35,22 +35,7 @@ watch(
     }, 500)
 );
 
-watch(
-    search,
-    throttle((value) => {
-        route.get(
-            // Executes a GET request to the search endpoint using the router.
-            // `${props.search}` dynamically constructs the search URL.
-            `/${props.search}`,
-            { search: value },
-            {
-                /*  Preserves the current state of
-                the page so whenever you type on search it does not reset */
-                preserveState: true,
-            }
-        );
-    })
-);
+
 </script>
 
 <template>
