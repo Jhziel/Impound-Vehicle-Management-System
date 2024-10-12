@@ -1,6 +1,8 @@
 <script setup>
 import FormLayout from "@/Layouts/FormLayout.vue";
 import BaseLayout from "@/Layouts/BaseLayout.vue";
+import Modal from "@/Components/Modal.vue";
+import { ref } from "vue";
 
 defineOptions({
     layout: BaseLayout,
@@ -20,11 +22,23 @@ const slotTop = props.slots.filter((slot) => slot.slot_code.startsWith("T"));
         form.slot = slot.id;
     }
 }; */
+const showEdit = ref(false);
+const currentSlot = ref(null);
+const show = ref(false);
+const showModal = (slot) => {
+    show.value = !show.value;
+};
+const closeModal = () => {
+    show.value = false;
+};
 </script>
 
 <template>
     <FormLayout>
         <div class="text-center">
+            <button @click="showModal" class="bg-green-500 px-2 py-2">
+                Show
+            </button>
             <h1 class="text-3xl font-bold text-gray-800 dark:text-slate-50">
                 Impound Area
             </h1>
@@ -50,6 +64,7 @@ const slotTop = props.slots.filter((slot) => slot.slot_code.startsWith("T"));
                         : 'bg-green-500 hover:bg-yellow-400', // Compare selected slot ID
                 ]"
                 class="border flex justify-center items-center cursor-pointer"
+                @click="showModal(slot)"
             >
                 {{ slot.slot_code }}
             </div>
@@ -64,7 +79,7 @@ const slotTop = props.slots.filter((slot) => slot.slot_code.startsWith("T"));
                             : 'bg-green-500 hover:bg-yellow-400',
                     ]"
                     class="border h-20 flex justify-center items-center cursor-pointer"
-                    @click="selectSlot(slot)"
+                    @click="showModal(slot)"
                 >
                     {{ slot.slot_code }}
                 </div>
@@ -80,11 +95,14 @@ const slotTop = props.slots.filter((slot) => slot.slot_code.startsWith("T"));
                             : 'bg-green-500 hover:bg-yellow-400',
                     ]"
                     class="border h-20 flex justify-center items-center cursor-pointer"
-                    @click="selectSlot(slot)"
+                    @click="showModal(slot)"
                 >
                     {{ slot.slot_code }}
                 </div>
             </div>
         </div>
     </FormLayout>
+    <Modal :show="show" @close="closeModal">
+        <dir v-if="condition"></dir>
+    </Modal>
 </template>
