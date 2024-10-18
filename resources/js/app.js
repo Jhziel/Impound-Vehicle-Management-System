@@ -30,6 +30,11 @@ import {
     faCircleXmark,
     faFilePen,
     faCarSide,
+    faCalendarDays,
+    faArrowUp,
+    faArrowDown,
+    faCalendarWeek,
+    faCalendarDay,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -50,7 +55,12 @@ library.add(
     faCircleCheck,
     faCircleXmark,
     faFilePen,
-    faCarSide
+    faCarSide,
+    faCalendarDays,
+    faArrowUp,
+    faArrowDown,
+    faCalendarWeek,
+    faCalendarDay
 );
 // Set the components prop default to return our fresh components
 VSelect.props.components.default = () => ({
