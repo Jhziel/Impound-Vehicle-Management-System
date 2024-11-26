@@ -295,9 +295,6 @@ onMounted(() => {
                 <SectionTitle> Cell Phone No. </SectionTitle>
                 <InputGroup>
                     <div class="md:w-1/2 w-full mb-6">
-                        <FormLabel labelfor="contact_no"
-                            >Cell Phone#:</FormLabel
-                        >
                         <FormInput
                             width="full"
                             type="number"
@@ -319,9 +316,6 @@ onMounted(() => {
                 <SectionTitle> Civil Status </SectionTitle>
                 <InputGroup>
                     <div class="md:w-1/2 w-full mb-6">
-                        <FormLabel labelfor="civil_status"
-                            >Civil Status:</FormLabel
-                        >
                         <StaticSelection
                             id="civil_status"
                             v-model="form.civil_status"
@@ -344,10 +338,6 @@ onMounted(() => {
                 <SectionTitle> Nationality </SectionTitle>
                 <InputGroup>
                     <div class="md:w-1/2 w-full mb-6">
-                        <FormLabel labelfor="nationality"
-                            >Nationality:</FormLabel
-                        >
-
                         <SelectionWithSearch
                             :data="nationality"
                             id="nationality"
@@ -369,8 +359,6 @@ onMounted(() => {
                 <SectionTitle> Gender </SectionTitle>
                 <InputGroup>
                     <div class="md:w-1/2 w-full mb-6">
-                        <FormLabel labelfor="Male">Gender:</FormLabel>
-
                         <!-- Male Radio Button -->
                         <RadioButton
                             value="Male"
@@ -394,10 +382,6 @@ onMounted(() => {
                 <SectionTitle> Date of Birth </SectionTitle>
                 <InputGroup>
                     <div class="md:w-1/2 w-full mb-6">
-                        <FormLabel labelfor="date_of_birth">
-                            Date of Birth:</FormLabel
-                        >
-
                         <FormInput
                             width="full"
                             type="date"
@@ -420,10 +404,6 @@ onMounted(() => {
                 <SectionTitle> License Type </SectionTitle>
                 <InputGroup>
                     <div class="md:w-1/2 w-full mb-6">
-                        <FormLabel labelfor="lincenseType">
-                            License Type:</FormLabel
-                        >
-
                         <StaticSelection
                             id="lincenseType"
                             v-model="form.license_type"
@@ -446,10 +426,6 @@ onMounted(() => {
                 <SectionTitle> License No </SectionTitle>
                 <InputGroup>
                     <div class="md:w-1/2 w-full mb-6">
-                        <FormLabel labelfor="license_no">
-                            License No:</FormLabel
-                        >
-
                         <FormInput
                             width="full"
                             type="text"
