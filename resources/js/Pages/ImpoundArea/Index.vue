@@ -36,15 +36,15 @@ const closeModal = () => {
 <template>
     <FormLayout>
         <div class="text-center">
-            <button @click="showModal" class="bg-green-500 px-2 py-2">
+            <!-- <button @click="showModal" class="bg-green-500 px-2 py-2">
                 Show
-            </button>
+            </button> -->
             <h1 class="text-3xl font-bold text-gray-800 dark:text-slate-50">
                 Impound Area
             </h1>
         </div>
 
-        <div class="flex justify-center items-center gap-2">
+        <div class="flex justify-center items-center gap-2 mb-8">
             <div class="bg-green-500 w-8 border h-8"></div>
             <p class="text-gray-800 dark:text-slate-50 font-semibold text-2xl">
                 Vacant
@@ -102,6 +102,7 @@ const closeModal = () => {
             </div>
         </div>
     </FormLayout>
+
     <Modal :show="show" @close="closeModal">
         <dir v-if="condition"></dir>
     </Modal>
