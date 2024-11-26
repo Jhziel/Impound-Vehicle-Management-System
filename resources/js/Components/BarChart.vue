@@ -1,28 +1,18 @@
 <!-- resources/js/Components/BarChart.vue -->
 <template>
     <div class="p-6 bg-white rounded-lg shadow-md">
-        <canvas ref="barChartCanvas"></canvas>
+        <canvas ref="barChartCanvas" class="w-full h-96"></canvas>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import {
-    Chart,
-    BarElement,
-    CategoryScale,
-    LinearScale,
-    Title,
-    Tooltip,
-    Legend,
-} from "chart.js";
-
-// Register Chart.js components
-Chart.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import { Chart } from "chart.js";
 
 const barChartCanvas = ref(null); // Reference to the canvas element
+let barChart = null; // Chart instance
 
-// Data for the chart
+// Chart data and options
 const chartData = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
@@ -43,7 +33,6 @@ const chartData = {
     ],
 };
 
-// Chart configuration
 const chartOptions = {
     responsive: true,
     scales: {
@@ -69,15 +58,22 @@ const chartOptions = {
 // Initialize the chart when the component is mounted
 onMounted(() => {
     if (barChartCanvas.value) {
-        new Chart(barChartCanvas.value, {
+        barChart = new Chart(barChartCanvas.value, {
             type: "bar",
             data: chartData,
             options: chartOptions,
         });
     }
 });
+
+// Destroy the chart when the component is unmounted
+onBeforeUnmount(() => {
+    if (barChart) {
+        barChart.destroy();
+    }
+});
 </script>
 
 <style scoped>
-/* Optional: Tailwind classes can handle most of the styling */
+/* Tailwind classes handle most of the styling */
 </style>
